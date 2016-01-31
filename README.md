@@ -1,1 +1,1 @@
-PHP backend for btiwiseinvestments.com
+PHP backend for bitwiseinvestments.com
