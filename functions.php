@@ -13,11 +13,7 @@
 	/* Test if the SESSION variable username is empty.
 	If so, return false (not logged in). Else, return true (logged in) */
 	function isLoggedIn() {
-		if (!empty($_SESSION["username"])) {
-			return true;
-		} else {
-			return false;
-		}
+		return !empty($_SESSION["username"]);
 	}
 	/* Return the email of a user from the database as a string */
 	function fetchEmail( $username, $db ) {
