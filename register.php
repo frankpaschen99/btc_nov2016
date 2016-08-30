@@ -18,7 +18,7 @@
 		@$password_confirm = htmlentities($_POST["password_confirmed"], ENT_COMPAT | ENT_HTML401, 'UTF-8');
 		
 		@$email = $_POST['email'];
-		$password_hash = password_hash($password, PASSWORD_DEFAULT);
+		$password_hash = password_hash($password, PASSWORD_BCRYPT);
 		$account = new Account(['name' => $username]);
 		$address = new Address(['name' => $username]);
 		
