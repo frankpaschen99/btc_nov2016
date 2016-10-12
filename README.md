@@ -1,1 +1,3 @@
-PHP backend for bitwiseinvestments.com
+New Bitcoin Scam
+
+Forked from original BitwiseInvestments codebase. 
