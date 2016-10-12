@@ -3,26 +3,29 @@ session_start();
 require_once("config.php");
 require_once("functions.php");
 
-$username = strtolower($_POST["username"]);
-$password = $_POST["password"];
+if (isset($_POST["submit"])) {
+	$username = strtolower($_POST["username"]);
+	$password = $_POST["password"];
 
-$stmt = $db->prepare("SELECT password FROM users WHERE username = :username");
-$stmt->bindValue(':username', strtolower($username), PDO::PARAM_STR);
-$stmt->execute();
-$row = $stmt->fetch();
+	$stmt = $db->prepare("SELECT password FROM users WHERE username = :username");
+	$stmt->bindValue(':username', strtolower($username), PDO::PARAM_STR);
+	$stmt->execute();
+	$row = $stmt->fetch();
 
-$hashed_password = $row["password"];
-$query = userQuery("SELECT username FROM users WHERE username = ?", $db, $username);
+	$hashed_password = $row["password"];
+	$query = userQuery("SELECT username FROM users WHERE username = ?", $db, $username);
 
-if (hash_equals($hashed_password, crypt($password, $hashed_password))) {
-	$_SESSION["username"] = strtolower($username);
-	header('Location: index.php');
+	if (hash_equals($hashed_password, crypt($password, $hashed_password))) {
+		$_SESSION["username"] = strtolower($username);
+		header('Location: index.php');
+	}
+	else if (!empty($username) && !empty($password)) {
+		echo '<div class="alert alert-dismissible alert-danger fade in" style="width: 60%; margin: auto; color:#FFF;">
+					<strong>Oh no!</strong> Either your username or password is incorrect!
+					</div>';
+	} 
 }
-else if (!empty($username) && !empty($password)) {
-	echo '<div class="alert alert-dismissible alert-danger fade in" style="width: 60%; margin: auto; color:#FFF;">
-				<strong>Oh no!</strong> Either your username or password is incorrect!
-				</div>';
-} 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,7 +65,7 @@ else if (!empty($username) && !empty($password)) {
 							</div>
 							<div class="12u$">
 								<ul class="actions">
-									<li><input value="Log In" class="special big" type="submit"></li>
+									<li><input value="Log In" class="special big" type="submit" name="submit"></li>
 								</ul>
 							</div>
 						</div>

@@ -9,7 +9,7 @@
 	use Coinbase\Wallet\Resource\Account;
 
 	session_start();
-
+	
 	/* Test if the SESSION variable username is empty.
 	If so, return false (not logged in). Else, return true (logged in) */
 	function isLoggedIn() {

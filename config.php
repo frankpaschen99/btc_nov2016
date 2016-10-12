@@ -14,8 +14,10 @@
 	$DB_HOST = "127.0.0.1";
 	
 	$db = new PDO("mysql:dbname=$DB_NAME;host=$DB_HOST", $DB_USER, $DB_PASS);
-	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	// $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	// Configure the Coinbase api and create a Client object
 	$configuration = Configuration::apiKey('vh3GZE5QALqHONWf', 'Kcu3F2LWx6PcfKmluVNhYJvd2UHq9csY');
 	$client = Client::create($configuration);
+	
+	error_reporting(E_ALL & ~E_NOTICE);
 ?>
