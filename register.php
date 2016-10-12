@@ -22,8 +22,8 @@
 		$account = new Account(['name' => $username]);
 		$address = new Address(['name' => $username]);
 		
-		$recaptcha = new \ReCaptcha\ReCaptcha($private_key);
-		$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
+		//$recaptcha = new \ReCaptcha\ReCaptcha($private_key);
+		//$resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 		
 		$res = $db->query("SELECT username FROM users WHERE username='$username'");
 		
@@ -39,11 +39,11 @@
 			echo '<div class="alert alert-dismissible alert-danger fade in" style="width: 60%; margin: auto; color:#FFF; ">
 				  <strong>These characters are not allowed in a username: /[\'^£$%&*()}{@#~?><>,|=_+¬-]/</strong> Choose a new one and try submitting again.
 				  </div>';
-		} else if (!$resp->isSuccess()) {
+		} /*else if (!$resp->isSuccess()) {
 			echo '<div class="alert alert-dismissible alert-danger fade in" style="width: 60%; margin: auto; color:#FFF; ">
 				  <strong>The CAPTCHA was not filled out correctly.</strong>
 				  </div>';
-		} else {
+		}*/ else {
 			$client->createAccount($account);
 			$client->createAccountAddress($account, $address);
 			
@@ -53,7 +53,7 @@
 			$stmt->execute(array(strtolower($username), $password_hash, $email, $deposit_address));
 			
 			$_SESSION["username"] = $username;
-			header("location: https://bitwiseinvestments.com/invest.php");
+			header("location: invest.php");
 			die("registered");
 		}
 	}

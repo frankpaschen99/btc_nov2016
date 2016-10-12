@@ -178,7 +178,8 @@
 		$query = userQuery("SELECT balance FROM users WHERE username = ?", $db, $username);
 		return $query["balance"];
 	}
-	function hash_equals($str1, $str2)
+	// Uncomment this when we get hosting
+	/*function hash_equals($str1, $str2)
     {
         if(strlen($str1) != strlen($str2))
         {
@@ -194,5 +195,5 @@
             }
             return !$ret;
         }
-    }
+    }*/
 ?>
