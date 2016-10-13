@@ -8,7 +8,7 @@
 	}
 	
 	// Support tickets
-	$stmt = $db->query("SELECT * FROM tickets");
+	/*$stmt = $db->query("SELECT * FROM tickets");
 
 	echo "<table border=1 style=width:100% height:100%>
 		 <tr>
@@ -30,7 +30,7 @@
 		echo '<td>' . $message . '</td>';
 		echo '<td>' . $date . '</td>';
 		echo '</tr><br />';	
-	}
+	}*/
 ?>
 <html>
 	<style>
