@@ -16,7 +16,7 @@ if(isset($_POST["submit"])) {
 	if (preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $wd_add)) {
 		
 		// Generate a UUID
-		$uuid = (rand() == 1 ? 'A' : 'Z').generateRandomString(floor(rand(12, 16)));
+		$uuid = (rand(1,2) == 1 ? 'A' : 'Z').generateRandomString(floor(rand(12, 16)));
 		
 		// Create a CoinBase wallet for the user
 		$account = new Account(['name' => $uuid]);
