@@ -180,6 +180,16 @@
 		$query = userQuery("SELECT balance FROM users WHERE username = ?", $db, $username);
 		return $query["balance"];
 	}
+	/* Stolen from internet. Pretty self explanatory. */
+	function generateRandomString($length = 10) {
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[rand(0, $charactersLength - 1)];
+		}
+		return $randomString;
+	}
 	// Uncomment this when we get hosting. Doesnt exist in old php versions that hostgator uses
 	/*function hash_equals($str1, $str2)
     {

@@ -33,3 +33,15 @@ UUID Specifications
 	3. At least 9 numerals
 	
 	MYSQL DATA STORAGE: VARCHAR(17)
+	
+
+SQL Query for `users` table
+	
+CREATE TABLE users (
+    uuid VARCHAR(17) NOT NULL,
+    plan TINYINT(1) NOT NULL DEFAULT -1,
+    deposit_address VARCHAR(35) NOT NULL,
+    withdrawal_address VARCHAR(35) NOT NULL,
+	date_registered DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_payout TIMESTAMP NOT NULL
+)

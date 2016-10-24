@@ -3,34 +3,38 @@
 // TODO: Implement this into /invest.php (requires Pedro's sexy HTML magic)
 
 require_once("functions.php");
+use Coinbase\Wallet\Resource\Account;
+use Coinbase\Wallet\Client;
+use Coinbase\Wallet\Configuration;
+use Coinbase\Wallet\Resource\Address;
 
 if(isset($_POST["submit"])) {
-	// address and plan from POST 
-	$wd_add = $_POST["withdraw_address"];	// address we'll send returns to
-	$plan = $_POST["plan"]; // ID of plan. dunno what the plans are til saf tells me
-	
+	$wd_add = $_POST["withdraw_address"];
+	$plan = $_POST["plan"];
+
 	// Test if both addressed match the Bitcoin naming spec using regular expressions
 	if (preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $wd_add)) {
-			
-		// generated UUID
-		$uuid = "temporary";
 		
-		// create coinbase wallet for user
+		// Generated a UUID
+		$uuid1 = rand() == 1 ? 'A' : 'Z';
+		$uuid2 = generateRandomString(floor(rand(12, 16)));
+		$uuid = $uuid1.$uuid2;
+		
+		// Create a CoinBase wallet for the user
 		$account = new Account(['name' => $uuid]);
 		$address = new Address(['name' => $uuid]);
 		$client->createAccount($account);
 		$client->createAccountAddress($account, $address);
 		
-		$deposit_address = $address->getAddress();	// tell this to the user so they can invest
+		// Fetch the BTC wallet address to send in GET back to invest page
+		$deposit_address = $address->getAddress();
 
-		// put the information in the database
-		$stmt = $db->prepare("INSERT INTO users(withdraw_address, plan, uuid) VALUES(?, ?, ?)");
-		$stmt->execute(array($wd_add, $dep_add, $plan, $uuid));
+		// Update the database
+		$stmt = $db->prepare("INSERT INTO users(uuid, withdrawal_address, deposit_address, plan) VALUES(?, ?, ?, ?)");
+		$stmt->execute(array($uuid, $wd_add, $deposit_address, $plan));
 		
-		// hopefully everything succeeded. Send them back to the invest page
-		// invest.php has to handle being given the deposit address. Relies on pedro's sexy HTML
+		// Send user back to invest.php with their new deposit address
 		header("Location: invest.php?depadd=" . $deposit_address);
-		
 	}
 }
 ?>
