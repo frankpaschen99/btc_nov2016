@@ -1,0 +1,5 @@
+replace user regitration with new system - CHECK
+
+as the database grows, run analyses to find the optimal data types for each column of data
+
+admin panel with graphs, stats, and controls (get a php graph library?)

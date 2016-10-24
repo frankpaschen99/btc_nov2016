@@ -1,0 +1,35 @@
+Database Structure
+
+UUID | plan | deposit_address | withdrawal_address | date_registered | last_payout
+
+INVESTING:
+
+	1. user selects plan and puts in withdrawal address
+	2. behind the scenes, PHP script creates a new coinbase wallet and database entry with a generated UUID
+		- name of the wallet is the previously generated UUID
+	3. screen changes, and the user is shown the deposit address
+	
+PAYING OUT:
+
+	1. for each row in the database, check how much the coinbase account with the same UUID has
+	2. take that amount (account value * ROI%) and send it to their withdrawal address in the db
+	
+	INTERVAL PAYOUTS
+		1. PHP script will run every 60 minutes (lowest interval)
+		2. loop through database, marking the `plan` and `last_payout` columns 
+		3. check last_payout against the current system time
+			- if, for example, plan 1 is every 60 minutes, if curtime-lasttime = 60 minutes (+- a few mins), then pay them out
+			
+			Example: 
+				PLAN 1: every 60 minutes for 24 hours
+				
+				SCRIPT PASS 1:
+					60 minutes has passed, pay out investor (account value * ROI) / 24)
+					update `last_payout` column in the database to the current system time.
+					
+UUID Specifications
+	1. 12-16 alphanumeric characters
+	2. Begins with an A or a Z
+	3. At least 9 numerals
+	
+	MYSQL DATA STORAGE: VARCHAR(17)
