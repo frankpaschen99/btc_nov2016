@@ -5,7 +5,9 @@
 	use Coinbase\Wallet\Configuration;
 	use Coinbase\Wallet\Resource\Address;
 	
+	// Global variables
 	$GLOBALS["ROI"] = 0.16; // 160% ROI for now
+	$GLOBALS["will_site_succeed"] = false;
 	
 	// Configure the database here
 	$DB_USER = "bwi";

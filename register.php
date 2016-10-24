@@ -1,4 +1,5 @@
 <?php
+/*
 	require_once("config.php");
 	require_once("libraries/vendor/autoload.php");
 	require_once("libraries/captcha/autoload.php");
@@ -43,7 +44,7 @@
 			echo '<div class="alert alert-dismissible alert-danger fade in" style="width: 60%; margin: auto; color:#FFF; ">
 				  <strong>The CAPTCHA was not filled out correctly.</strong>
 				  </div>';
-		}*/ else {
+		}*//* else {
 			$client->createAccount($account);
 			$client->createAccountAddress($account, $address);
 			
@@ -57,6 +58,7 @@
 			die("registered");
 		}
 	}
+*/
 ?>
 <html lang='en'>
 	<head>

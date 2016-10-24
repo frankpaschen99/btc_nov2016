@@ -3,6 +3,7 @@
 	require_once("functions.php");
 ?>
 <!DOCTYPE html>
+<!-- Most of this page needs to be gutted/rewritten to support the new system -->
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
@@ -84,33 +85,13 @@
 							<section class="box">
 								<i class="icon big rounded color9 fa-arrow-up"></i>
 								<h3>Invest</h3>
-							    <?php 
-							    echo("<img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . getWallet($db) . "/>");
+							    <?php
+									// make sure it's a valid BTC address for the QR code shit
+									if (isset($_GET["depadd"]) && preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $_GET["depadd"])) {
+										echo "<p>" . $_GET["depadd"] . "</p>";
+										// add back QR codes -- accidentally cut it
+									}
 							    ?>
-								<p><?php echo getWallet($db);?></p>
-							</section>
-						</div>
-						<div class="4u 12u$(medium)">
-							<section class="box">
-								<i class="icon big rounded color1 fa-exchange"></i>
-								<h3>Instantly Invest or Divest</h3>
-							</section>
-						</div>
-						<div class="4u$ 12u$(medium)">
-							<section class="box">
-								<i class="icon big rounded color6 fa-arrow-down"></i>
-								<h3>Divest</h3>
-								<form method="post" action="divest.php">
-								<div class="row uniform 50%">
-									<input type="text" id="inputAddress" name="inputAddress" value="" placeholder="your wallet address" /> </br>
-									<input type="text" id="inputAmount" name="inputAmount" value="" placeholder="amount to divest" />
-									<div class="12u$">
-										<ul class="actions">
-											<li><input type="submit" value="Confirm Divestment" class="special" /></li>
-										</ul>
-									</div>
-								</div>
-							</form>
 							</section>
 						</div>
 					</div>

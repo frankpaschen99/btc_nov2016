@@ -1,4 +1,9 @@
 <?php
+	/**
+	 *	Update 10/22/16: Most of these functions are now deprecated.
+	 *	These include most functions related to sql queries, user accounts, coinbase accounts, and
+	 * 	transactions between coinbase accounts.
+	**/
 	require_once("config.php");
 
 	use Coinbase\Wallet\Client;
@@ -52,10 +57,7 @@
 	}
 	function getAccount($username, $client) {
 		foreach ($client->getAccounts() as $acct) {
-			if ($acct->getName() == $username) 
-			{
-				return $acct;
-			}
+			if ($acct->getName() == $username) return $acct;
 		}
 	}
 	/* Return the username of the current logged in user as a string */
@@ -178,7 +180,7 @@
 		$query = userQuery("SELECT balance FROM users WHERE username = ?", $db, $username);
 		return $query["balance"];
 	}
-	// Uncomment this when we get hosting
+	// Uncomment this when we get hosting. Doesnt exist in old php versions that hostgator uses
 	/*function hash_equals($str1, $str2)
     {
         if(strlen($str1) != strlen($str2))
