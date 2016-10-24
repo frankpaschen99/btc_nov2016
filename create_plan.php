@@ -15,10 +15,8 @@ if(isset($_POST["submit"])) {
 	// Test if both addressed match the Bitcoin naming spec using regular expressions
 	if (preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $wd_add)) {
 		
-		// Generated a UUID
-		$uuid1 = rand() == 1 ? 'A' : 'Z';
-		$uuid2 = generateRandomString(floor(rand(12, 16)));
-		$uuid = $uuid1.$uuid2;
+		// Generate a UUID
+		$uuid = (rand() == 1 ? 'A' : 'Z').generateRandomString(floor(rand(12, 16)));
 		
 		// Create a CoinBase wallet for the user
 		$account = new Account(['name' => $uuid]);
