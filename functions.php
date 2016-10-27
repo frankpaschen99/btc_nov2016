@@ -74,7 +74,7 @@
 	/* Return the balance of a user from the database as a decimal with (16,8) precision */
 	function getBalance($client) {
 		if (!hasUniqueIDSet()) {
-			return "0.00";
+			return "0.00000000";
 		}
 		$user_acct = getAccount(getSessionUUID(), $client);
 		return $user_acct->getBalance()->getAmount();
