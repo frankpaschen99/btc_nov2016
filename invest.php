@@ -26,7 +26,7 @@
 	<body>
 		<?php
 			
-			$_SESSION["balance"] = getBalance($client);
+			// $_SESSION["balance"] = getBalance($client);
 			//$_SESSION["stake"] = calc_stake($client);
 			//$_SESSION["profit"] = calc_profit($client);
 		?>
@@ -93,8 +93,7 @@
 										echo("<img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . $_GET["depadd"] . "/>");
 										echo "<p>Deposit Address:<br/>" . $_GET["depadd"] . "</p>";
 										echo "<p>Your UUID <strong>(Save This)</strong>:<br />" . $_GET["uuid"]. "</p>";
-									} 
-									if (!hasUniqueIDSet()) {
+									} else {
 										echo "<form action='create_plan.php' method='POST'>
 											<input type='text' name='plan' placeholder='plan id-soon to be a button/dropdown or something'>
 											<input type='text' name='withdraw_address' placeholder='address you wish to withdraw to'><br/>
@@ -103,6 +102,7 @@
 											<!-- TODO: Put a CAPTCHA in here -->
 											</form>";
 									}
+									returnHourlyProfits($client, $db);
 							    ?>
 							</section>
 						</div>

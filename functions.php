@@ -38,6 +38,14 @@
 		
 		return $row['id'];
 	}
+	function fetchPlan( $uuid, $db ) {
+		$row = uuidQuery("SELECT plan FROM users WHERE uuid = ?", $db, $uuid);
+		return $row["plan"];
+	}
+	function fetchLastPayout($uuid, $db) {
+		$row = uuidQuery("SELECT last_payout FROM users WHERE uuid = ?", $db, $uuid);
+		return $row["last_payout"];
+	}
 	/* Query the database WHERE username = ? using secure prepared statements */
 	function userQuery( $query, $db, $username ) {
 		$stmt = $db->prepare($query);
@@ -201,15 +209,56 @@
 		}
 		return $randomString;
 	}
+	// tests if the UUID session variable is set
 	function hasUniqueIDSet() {
 		return !empty($_SESSION["uuid"]);
 	}
+	// returns the withdrawal address from the db that corresponds to a uuid
 	function getAddressFromUniqueID($uuid, $db) {
 		$query = uuidQuery("SELECT withdrawal_address FROM users WHERE uuid = ?", $db, $uuid);
 		return $query["withdrawal_address"];
 	}
+	// Returns the uuid session value
 	function getSessionUUID() {
 		return $_SESSION["uuid"];
+	}
+	/* Extremely important function. Will be called by the script that runs every 60 minutes. Modified version of return_profits() */
+	function returnHourlyProfits($client, $db) {
+		foreach($client->getAccounts() as $acct) {
+			$wallet_sql = userQuery("SELECT withdrawal_address FROM users WHERE uuid = ?", $db, $acct->getName());
+			$user_wallet = $wallet_sql["withdrawal_address"];
+			$acct_balance = $acct->getBalance()->getAmount();
+			$plan = fetchPlan($acct->getName(), $db);
+			$return_on_investment;
+			
+			/* Timestamp cancer */
+			$datetime1 = new DateTime();
+			$datetime1->setTimestamp(time());
+			$datetime2 = new DateTime(fetchLastPayout($acct->getName(), $db));
+			$elapsed = $datetime1->diff($datetime2)->format('%i');
+			
+			/* Calculate ROI based on plan */
+			switch($plan) {
+				case 1:	// every 24 hrs
+					$return_on_investment = ($acct_balance * $GLOBALS["ROI"]) / 24;	// this is how math works right
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				default:
+			}
+			
+			// if it's been within 5 minutes of an hour, send them their money
+			if ($elapsed > 55 && $elapsed < 65) {
+				$transaction = Transaction::send([
+					'toBitcoinAddress' => $user_wallet,
+					'amount'           => new Money($return_on_investment, CurrencyCode::BTC),
+					'description'      => 'Return on Investment'
+				]);
+				$client->createAccountTransaction($acct, $transaction);
+			}
+		}
 	}
 	// Uncomment this when we get hosting. Doesnt exist in old php versions that hostgator uses
 	/*function hash_equals($str1, $str2)
