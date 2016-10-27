@@ -46,6 +46,14 @@
 		$row = uuidQuery("SELECT last_payout FROM users WHERE uuid = ?", $db, $uuid);
 		return $row["last_payout"];
 	}
+	function fetchDepositAddress($uuid, $db) {
+		$row = uuidQuery("SELECT deposit_address FROM users WHERE uuid = ?", $db, $uuid);
+		return $row["deposit_address"];
+	}
+	function fetchWithdrawAddress($uuid, $db) {
+		$query = uuidQuery("SELECT withdrawal_address FROM users WHERE uuid = ?", $db, $uuid);
+		return $query["withdrawal_address"];
+	}
 	/* Query the database WHERE username = ? using secure prepared statements */
 	function userQuery( $query, $db, $username ) {
 		$stmt = $db->prepare($query);
@@ -213,11 +221,6 @@
 	function hasUniqueIDSet() {
 		return !empty($_SESSION["uuid"]);
 	}
-	// returns the withdrawal address from the db that corresponds to a uuid
-	function getAddressFromUniqueID($uuid, $db) {
-		$query = uuidQuery("SELECT withdrawal_address FROM users WHERE uuid = ?", $db, $uuid);
-		return $query["withdrawal_address"];
-	}
 	// Returns the uuid session value
 	function getSessionUUID() {
 		return $_SESSION["uuid"];
@@ -225,6 +228,10 @@
 	/* Extremely important function. Will be called by the script that runs every 60 minutes. Modified version of return_profits() */
 	function returnHourlyProfits($client, $db) {
 		foreach($client->getAccounts() as $acct) {
+			if (($acct->getName() == "BTC Wallet" || $acct->getName() == "Cold Wallet") || $acct->getBalance()->getAmount() <= 0) {
+				continue;
+			}
+			
 			$wallet_sql = userQuery("SELECT withdrawal_address FROM users WHERE uuid = ?", $db, $acct->getName());
 			$user_wallet = $wallet_sql["withdrawal_address"];
 			$acct_balance = $acct->getBalance()->getAmount();
