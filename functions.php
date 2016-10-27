@@ -47,20 +47,29 @@
 		
 		return $row;
 	}
+	function uuidQuery( $query, $db, $uuid ) {
+		$stmt = $db->prepare($query);
+		$stmt->bindValue(1, $uuid, PDO::PARAM_STR);
+		$stmt->execute();
+		$row = $stmt->fetch();
+		
+		return $row;
+	}
 	/* Return the balance of a user from the database as a decimal with (16,8) precision */
 	function getBalance($client) {
-		if (!isLoggedIn()) {
+		if (!hasUniqueIDSet()) {
 			return "0.00";
 		}
-		$user_acct = getAccount(getName(), $client);
+		$user_acct = getAccount(getSessionUUID(), $client);
 		return $user_acct->getBalance()->getAmount();
 	}
-	function getAccount($username, $client) {
+	function getAccount($uuid, $client) {
 		foreach ($client->getAccounts() as $acct) {
-			if ($acct->getName() == $username) return $acct;
+			if ($acct->getName() == $uuid) return $acct;
 		}
 	}
 	/* Return the username of the current logged in user as a string */
+	/* Deprecated 10/26/16. Use getSessionUUID() instead */
 	function getName() {
 		if (isLoggedIn()) {
 			return $_SESSION["username"];
@@ -104,6 +113,7 @@
 	}
 	/* Processes a withdraw using the Coinbase API. If the transaction succeeds, the user is 
 	credited in the database the negative amount they are withdrawing. */
+	/* Do not use this ever again */
 	function withdraw($amount, $address, $db, $client) {	
 		$user_wallet = getWallet($db);
 		$user_acct = getAccount(getName(), $client);
@@ -113,7 +123,7 @@
 			'amount'           => new Money($amount, CurrencyCode::BTC),
 			'description'      => 'Withdrawal from bitwiseinvestments.com to ' . $address
 		]);
-		$client->createAccountTransaction($user_acct, $transaction);
+		// $client->createAccountTransaction($user_acct, $transaction);		functionality removed
 	}
 	/* This function updates the balance of a user in the database. */
 	function credit_user($username, $amount, $db) {
@@ -136,6 +146,7 @@
 	function reset_credit($db) {
 		$db->exec("UPDATE users SET balance = 0");
 	}
+	/* Do not use this ever again maybe. Might need to rewrite. */
 	function transfer_wallets_to_pot($client, $db) {
 		credit_all_users($db, $client);
 		foreach($client->getAccounts() as $acct) {
@@ -189,6 +200,16 @@
 			$randomString .= $characters[rand(0, $charactersLength - 1)];
 		}
 		return $randomString;
+	}
+	function hasUniqueIDSet() {
+		return !empty($_SESSION["uuid"]);
+	}
+	function getAddressFromUniqueID($uuid, $db) {
+		$query = uuidQuery("SELECT withdrawal_address FROM users WHERE uuid = ?", $db, $uuid);
+		return $query["withdrawal_address"];
+	}
+	function getSessionUUID() {
+		return $_SESSION["uuid"];
 	}
 	// Uncomment this when we get hosting. Doesnt exist in old php versions that hostgator uses
 	/*function hash_equals($str1, $str2)

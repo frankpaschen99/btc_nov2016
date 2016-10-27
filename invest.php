@@ -16,6 +16,7 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-layers.min.js"></script>
 		<script src="js/init.js"></script>
+		<script src='https://www.google.com/recaptcha/api.js'></script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -26,9 +27,8 @@
 		<?php
 			
 			$_SESSION["balance"] = getBalance($client);
-			$_SESSION["stake"] = calc_stake($client);
-			$_SESSION["profit"] = calc_profit($client)
-			
+			//$_SESSION["stake"] = calc_stake($client);
+			//$_SESSION["profit"] = calc_profit($client);
 		?>
 		<!-- Header -->
 			<header id="header">
@@ -40,14 +40,9 @@
 						<li><a href="terms.php">Terms</a></li>
 						<li><a href="https://bitcointalk.org/index.php?topic=1321732">Talk</a></li>
 						<li><a href="index.php#three">Contact Us</a></li>
-						<?php if(!isLoggedIn()){ echo "<li>|</li>
-						<li><a href='log_in.php'>Sign In</a></li>
-						<li><a href='register.php'' class='button special'>Sign Up</a></li>";}else{
-							echo "<li><a href='log_out.php'>Log Out</a></li><li><a href='#'' class='button special'>" . getName() . "</a></li>";}?>
 					</ul>
 				</nav>
 			</header>
-
 
 		<!-- One -->
 			<section id="one" class="wrapper style4 special">
@@ -76,6 +71,11 @@
 							</section>
 						</div>
 					</div>
+					<p>Input your UUID to view your statistics and transaction history.</p>
+					<form action="input_uuid.php" method="GET">
+						<input type='text' name='uuid' placeholder='Your UUID'><br/>
+						<input type='submit' name='submit'>
+					</form>
 				</div>
 			</section>
 			<section id="one" class="wrapper style1 special">
@@ -85,11 +85,23 @@
 							<section class="box">
 								<i class="icon big rounded color9 fa-arrow-up"></i>
 								<h3>Invest</h3>
+								<!-- plan creation form - MAKE IT PRETTY PEDRO PLS -->
+								
 							    <?php
 									// make sure it's a valid BTC address for the QR code shit
 									if (isset($_GET["depadd"]) && preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $_GET["depadd"])) {
-										echo "<p>" . $_GET["depadd"] . "</p>";
-										// add back QR codes -- accidentally cut it
+										echo("<img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . $_GET["depadd"] . "/>");
+										echo "<p>Deposit Address:<br/>" . $_GET["depadd"] . "</p>";
+										echo "<p>Your UUID <strong>(Save This)</strong>:<br />" . $_GET["uuid"]. "</p>";
+									} 
+									if (!hasUniqueIDSet()) {
+										echo "<form action='create_plan.php' method='POST'>
+											<input type='text' name='plan' placeholder='plan id-soon to be a button/dropdown or something'>
+											<input type='text' name='withdraw_address' placeholder='address you wish to withdraw to'><br/>
+											<center><div class='g-recaptcha' data-sitekey='6LffbhQTAAAAABC-WF-gGLNxK6dJR0jkOE_RsICk'></div></center><br/>
+											<input type='submit' name='submit'>
+											<!-- TODO: Put a CAPTCHA in here -->
+											</form>";
 									}
 							    ?>
 							</section>
@@ -111,8 +123,8 @@
 							</thead>
 							<tbody>
 								<?php
-								if (isLoggedIn()) {
-									$transactions = $client->getAccountTransactions(getAccount(getName(), $client));
+								if (hasUniqueIDSet()) {
+									$transactions = $client->getAccountTransactions(getAccount(getSessionUUID(), $client));
 									foreach($transactions as $t) {
 									$date = $t->getCreatedAt();
 									$result = $date->format('Y-m-d H:i:s');

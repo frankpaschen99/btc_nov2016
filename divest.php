@@ -20,7 +20,7 @@
 	} else if ($amount < 0.0001) {
 		echo "The amount you are trying to withdraw is below the minimum! <br />";
 	} else {
-		withdraw($amount, $address, $db, $client);
+		// withdraw($amount, $address, $db, $client);		functionality removed 10/26/16
 		echo "Sending " . $amount . " BTC to " . $address . "... Please wait.<br />";
 		sleep(3);
 	}
