@@ -1,5 +1,18 @@
 replace user regitration with new system - CHECK
 
-as the database grows, run analyses to find the optimal data types for each column of data
-
 admin panel with graphs, stats, and controls (get a php graph library?)
+
+CloudFlare spam protection would be cool
+
+
+TODO 10/28/16
+
+Admin Panel
+
+	- Secure login
+	- Charts (using Charts.js)
+		1. line graph showing number of user accounts created over time
+		2. pie chart showing the distribution of bitcoins across all active accounts
+		3. think of more
+	- Support ticket system (already sort-of implemented)
+	- Account controls (Deactivate, Manual payout, etc.);
