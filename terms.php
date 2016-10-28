@@ -33,10 +33,6 @@
 						<li><a href="terms.php">Terms</a></li>
 						<li><a href="https://bitcointalk.org/index.php?topic=1321732">Talk</a></li>
 						<li><a href="index.php#three">Contact Us</a></li>
-						<?php if(!isLoggedIn()){ echo "<li>|</li>
-						<li><a href='log_in.php'>Sign In</a></li>
-						<li><a href='register.php'' class='button special'>Sign Up</a></li>";}else{
-							echo "<li><a href='#'' class='button special'>" . getName() . "</a></li>";}?>
 				</nav>
 			</header>
 

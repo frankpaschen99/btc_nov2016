@@ -33,10 +33,6 @@
 						<li><a href="terms.php">Terms</a></li>
 						<li><a href="https://bitcointalk.org/index.php?topic=1321732">Talk</a></li>
 						<li><a href="index.php#three">Contact Us</a></li>
-						<?php if(!isLoggedIn()){ echo "<li>|</li>
-						<li><a href='log_in.php'>Sign In</a></li>
-						<li><a href='register.php'' class='button special'>Sign Up</a></li>";}else{
-							echo "<li><a href='log_out.php'>Log Out</a></li><li><a href='#'' class='button special'>" . getName() . "</a></li>";}?>
 					</ul>
 				</nav>
 			</header>
@@ -97,7 +93,7 @@
 					<form action="submit_ticket.php" method="post">
 						<div class="row uniform">
 							<div class="6u 12u$(small)">
-								<input name="name" id="name" value="" placeholder="Name" type="text">
+								<input name="name" id="name" value="" placeholder="Unique ID (Optional)" type="text">
 							</div>
 							<div class="6u$ 12u$(small)">
 								<input name="email" id="email" value="" placeholder="Email" type="email">

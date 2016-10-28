@@ -17,11 +17,11 @@
 <?php
 	require_once("functions.php");
 	require_once("config.php");
-	
+	echo "<h2>Frank's Super Neat and Functional Admin Panel</h2>";
 	/*if (!isAdmin($db, getName()) || !isLoggedIn()) {
 		header("https://bitwiseinvestments.com/");
 		die();
-	}
+	}*/
 	
 	// Support tickets
 	$stmt = $db->query("SELECT * FROM tickets");
@@ -36,7 +36,7 @@
 	
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 	{
-		$user = $row['user'];
+		$user = $row['uuid'];
 		$message = $row['content'];
 		$email = $row['email'];
 		$date = $row['submitted'];
@@ -46,7 +46,7 @@
 		echo '<td>' . $message . '</td>';
 		echo '<td>' . $date . '</td>';
 		echo '</tr><br />';	
-	}*/
+	}
 
 	// echo "<script>x($v);</script>";
 ?>

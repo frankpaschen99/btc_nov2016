@@ -23,16 +23,14 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for table `tickets`
 --
 
-CREATE TABLE `users` (
-  `uuid` varchar(17) DEFAULT NULL,
-  `plan` tinyint(1) NOT NULL DEFAULT '-1',
-  `deposit_address` varchar(35) NOT NULL,
-  `withdrawal_address` varchar(35) NOT NULL,
-  `date_registered` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_payout` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE `tickets` (
+  `uuid` varchar(17) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `content` longtext NOT NULL,
+  `submitted` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

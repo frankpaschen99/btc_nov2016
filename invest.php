@@ -89,23 +89,23 @@
 								
 							    <?php
 									// make sure it's a valid BTC address for the QR code shit
+									// shown when submit is pressed
 									if (isset($_GET["depadd"]) && preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $_GET["depadd"])) {
 										echo("<img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . $_GET["depadd"] . "/>");
 										echo "<p>Deposit Address:<br/>" . $_GET["depadd"] . "</p>";
 										echo "<p>Your UUID <strong>(Save This)</strong>:<br />" . $_GET["uuid"]. "</p>";
-									} 
-									if (!hasUniqueIDSet()) {
+									} else if (!hasUniqueIDSet()) { // shown when submit is not pressed, and when they havent input a UUID
 										echo "<form action='create_plan.php' method='POST'>
 											<input type='text' name='plan' placeholder='plan id-soon to be a button/dropdown or something'>
 											<input type='text' name='withdraw_address' placeholder='address you wish to withdraw to'><br/>
 											<center><div class='g-recaptcha' data-sitekey='6LffbhQTAAAAABC-WF-gGLNxK6dJR0jkOE_RsICk'></div></center><br/>
 											<input type='submit' name='submit'>
 											</form>";
-									} else {
+										echo "<p>By clicking submit, you automatically agree to our <a href=terms.php>terms & conditions</a>.</p>";
+									} else {	// shown when the user inputs a UUID to view stats/addresses
 										echo("<img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . fetchDepositAddress(getSessionUUID(), $db) . "/>");
 										echo "<p>Deposit Address:<br/>" . fetchDepositAddress(getSessionUUID(), $db) . "</p>";
 									}
-									returnHourlyProfits($client, $db);
 							    ?>
 							</section>
 						</div>
