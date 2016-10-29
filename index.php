@@ -131,7 +131,7 @@ require_once("functions.php");
 							<h4>Deposit Address:<br/>" . $_GET["depadd"] . "</h4>
 							</div>";
 							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
-							<h4>Your UUID (Save This):<br />" . $_GET["uuid"]. "</h4>";
+							<h4>Your UUID (Save This):<br />" . $_GET["uuid"]. "</h4></div>";
 						} else if (!hasUniqueIDSet()) { // shown when submit is not pressed, and when they havent input a UUID
 							echo "<form class='form-inline' action='create_plan.php' method='POST'>
 									<div class='col-md-4 col-sm-4'>
