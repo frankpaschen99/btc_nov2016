@@ -160,8 +160,8 @@ require_once("functions.php");
 					<p>Input your UUID to view your statistics and deposit information:</p>
 					</div>
 					<form action="input_uuid.php" method="GET">
-						<input type='text' name='uuid' placeholder='Your UUID'><br/>
-						<input type='submit' name='submit'>
+						<input type='text' class='form-control' name='uuid' placeholder='Your UUID'><br/>
+						<input type='submit' class='btn btn-default btn-block' name='submit'>
 					</form></center>
 				</div>
 			</div>
