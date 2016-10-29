@@ -127,8 +127,11 @@ require_once("functions.php");
 					<?php
 						if (isset($_GET["depadd"]) && preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $_GET["depadd"])) {
 							echo("<img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . $_GET["depadd"] . "/>");
-							echo "<p>Deposit Address:<br/>" . $_GET["depadd"] . "</p>";
-							echo "<p>Your UUID <strong>(Save This)</strong>:<br />" . $_GET["uuid"]. "</p>";
+							echo "<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+							<h4>Deposit Address:<br/>" . $_GET["depadd"] . "</h4>
+							</div>";
+							echo "<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+							<h4>Your UUID (Save This):<br />" . $_GET["uuid"]. "</h4>";
 						} else if (!hasUniqueIDSet()) { // shown when submit is not pressed, and when they havent input a UUID
 							echo "<form class='form-inline' action='create_plan.php' method='POST'>
 									<div class='col-md-4 col-sm-4'>
@@ -153,7 +156,9 @@ require_once("functions.php");
 								</form>";
 						} else {	// shown when the user inputs a UUID to view stats/addresses
 							echo("<center><img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . fetchDepositAddress(getSessionUUID(), $db) . "/>");
-							echo "<p>Deposit Address:<br/>" . fetchDepositAddress(getSessionUUID(), $db) . "</p></center>";
+							echo "<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+							<h4>Deposit Address:<br/>" . fetchDepositAddress(getSessionUUID(), $db) . "</h4>
+							</div></center>";
 						}
 					?>
 					<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
