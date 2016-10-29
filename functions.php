@@ -54,9 +54,25 @@
 		$query = uuidQuery("SELECT withdrawal_address FROM users WHERE uuid = ?", $db, $uuid);
 		return $query["withdrawal_address"];
 	}
+	function fetchStaticBalance($uuid, $db) {
+		$query = uuidQuery("SELECT static_bal FROM users WHERE uuid = ?", $db, $uuid);
+		return $query["static_bal"]/100000000;	// return BTC instead of satoshi
+	}
 	function resetLastPayout($uuid, $db) {
 		$query = "UPDATE users SET last_payout = NOW() WHERE uuid = ?";
 		$db->prepare($query)->execute([$uuid]);	// new way of doing this apparantly
+	}
+	function fetchTimesPayed($uuid, $db) {
+		$query = uuidQuery("SELECT num_payed FROM users WHERE uuid = ?", $db, $uuid);
+		return $query["num_payed"];
+	}
+	function incrementTimesPayed($uuid, $db) {
+		$query = "UPDATE users SET num_payed = ? WHERE uuid = ?";
+		$db->prepare($query)->execute([fetchTimesPayed($uuid, $db)+1, $uuid]);
+	}
+	function setStaticBalance($uuid, $db, $btc_value) {
+		$query = "UPDATE users SET static_bal = ? WHERE uuid = ?";
+		$db->prepare($query)->execute([$btc_value*100000000, $uuid]);	// set to satoshi value, not BTC
 	}
 	/* Query the database WHERE username = ? using secure prepared statements */
 	function userQuery( $query, $db, $username ) {
@@ -234,13 +250,14 @@
 		foreach($client->getAccounts() as $acct) {
 			$user_acct_name = $acct->getName();
 			$acct_balance = $acct->getBalance()->getAmount();
+			
 			if (($user_acct_name == "BTC Wallet" || $user_acct_name == "Cold Wallet") || $acct_balance < 0.0001) {
 				continue;
 			}
 			
 			$wallet_sql = userQuery("SELECT withdrawal_address FROM users WHERE uuid = ?", $db, $user_acct_name);
 			$user_wallet = $wallet_sql["withdrawal_address"];
-			
+			$times_payed = fetchTimesPayed($user_acct_name, $db);
 			$plan = fetchPlan($user_acct_name, $db);
 			$return = -1;
 			
@@ -252,23 +269,34 @@
 			
 			if ($plan == 1) {
 				// 24 hour plan.
+				if ($elapsed >= 55) {
+					$return = fetchStaticBalance($user_acct_name, $db) * 0.46;
+				}
 			} else if ($plan == 2) {
 				// 48 hour plan
+				if ($elapsed >= 355) {
+					$return = fetchStaticBalance($user_acct_name, $db) * 0.21;
+				}
 			} else if ($plan == 3) {
 				// 5 day plan
-			} else if ($plan == 4) {
-				// 7 day plan. 200% after 7 days, 28.57% daily
-				if ($elapsed >= 1435) {	// 1440 minutes in a day
-					$return = $acct_balance * 0.2857;
+				if ($elapsed >= 7195) {
+					$return = fetchStaticBalance($user_acct_name, $db) * 0.40;
 				}
 			} else {
 				return;	// something bad happened
+			}
+			
+			if ($times_payed <= 0) {
+				// CYCLE STARTED! Set their permanent account balance.
+				setStaticBalance($user_acct_name, $db, $acct_balance);
 			}
 			
 			// Another safeguard to make sure we're not sending an empty transaction
 			if ($return > 0) {
 				// Update user's last_payout
 				resetLastPayout($user_acct_name, $db);
+				// Increase # of times paid by 1
+				incrementTimesPayed($user_acct_name, $db);
 				
 				// Send the transaction
 				$transaction = Transaction::send([

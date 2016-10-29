@@ -86,8 +86,7 @@
 								<i class="icon big rounded color9 fa-arrow-up"></i>
 								<h3>Invest</h3>
 								<!-- plan creation form - MAKE IT PRETTY PEDRO PLS -->
-								
-							    <?php
+							    <?php								
 									// make sure it's a valid BTC address for the QR code shit
 									// shown when submit is pressed
 									if (isset($_GET["depadd"]) && preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $_GET["depadd"])) {
