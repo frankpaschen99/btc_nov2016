@@ -1,0 +1,1 @@
+C:\xampp\php\php.exe C:\xampp\htdocs\bitcoin-scam-2.0\return_hourly_profits.php
