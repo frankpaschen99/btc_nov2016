@@ -162,7 +162,8 @@ require_once("functions.php");
 						}
 					?>
 					<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-					<h4>Input your UUID to view your statistics and deposit information:</h4>
+					<br/><br />
+					<h4 style="color:white;">Input your UUID to view your statistics and deposit information:</h4>
 					</div>
 					<form action="input_uuid.php" method="GET">
 						<input type='text' class='form-control' name='uuid' placeholder='Your UUID'><br/>
