@@ -258,7 +258,7 @@
 				// 5 day plan
 			} else if ($plan == 4) {
 				// 7 day plan. 200% after 7 days, 28.57% daily
-				if ($elapsed >= 1435 && $elapsed <= 1445) {	// 5 minutes +- 24 hours
+				if ($elapsed >= 1435) {	// 1440 minutes in a day
 					$return = $acct_balance * 0.2857;
 				}
 			} else {
