@@ -22,8 +22,14 @@ if (!$resp->isSuccess()) {
 
 if(isset($_POST["submit"])) {
 	$wd_add = $_POST["withdraw_address"];
-	$plan = $_POST["plan"];
-
+	$plan = $_POST["plan_dropdown"];
+	
+	// User didn't select a plan
+	if ($plan == -1) {
+		header("Location: index.php?error=plan_not_selected#gtco-started");
+		die();
+	}
+	
 	// Test if both addressed match the Bitcoin naming spec using regular expressions
 	if (preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $wd_add)) {
 		
@@ -44,7 +50,7 @@ if(isset($_POST["submit"])) {
 		$stmt->execute(array($uuid, $wd_add, $deposit_address, $plan));
 		
 		// Send user back to invest.php with their new deposit address
-		header("Location: invest.php?depadd=" . $deposit_address . "&uuid=" . $uuid);
+		header("Location: index.php?depadd=" . $deposit_address . "&uuid=" . $uuid);
 	}
 }
 ?>

@@ -1,131 +1,415 @@
 <?php
-	require_once("config.php");
-	require_once("functions.php");
+require_once("config.php");
+require_once("functions.php");
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 	<head>
-		<meta charset="UTF-8">
-		<title>Bitwise Investments</title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="A new, safer way to grow your bitcoin!" />
-		<meta name="keywords" content="" />
-		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/skel.min.js"></script>
-		<script src="js/skel-layers.min.js"></script>
-		<script src="js/init.js"></script>
-		<noscript>
-			<link rel="stylesheet" href="css/skel.css" />
-			<link rel="stylesheet" href="css/style.css" />
-			<link rel="stylesheet" href="css/style-xlarge.css" />
-		</noscript>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ShittyName &mdash; Bitcoin Investing</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="css/magnific-popup.css">
+
+	<!-- Owl Carousel  -->
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
 	</head>
-	<body class="landing">
+	<body>
 
-		<!-- Header -->
-			<header id="header">
-				<h1><a href="index.php">Bitwise Investments</a></h1>
-				<nav id="nav">
+	<div class="gtco-loader"></div>
+
+	<div id="page">
+	<nav class="gtco-nav" role="navigation">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-xs-2">
+					<div id="gtco-logo"><a href="index.html">ShittyName</a></div>
+				</div>
+				<div class="col-xs-8 text-center menu-1">
 					<ul>
-						<li><a href="index.php">Home</a></li>
-						<li><a href="invest.php">Dashboard</a></li>
-						<li><a href="terms.php">Terms</a></li>
-						<li><a href="https://bitcointalk.org/index.php?topic=1321732">Talk</a></li>
-						<li><a href="index.php#three">Contact Us</a></li>
+						<li class="active"><a href="index.php">Home</a></li>
+						<li><a href="#">BitcoinTalk</a></li>
+						<li><a href="contact.php">Contact</a></li>
 					</ul>
-				</nav>
-			</header>
+				</div>
+				<div class="col-xs-2 text-right hidden-xs menu-2">
+					<ul>
+						<li class="btn-cta"><a href="#"><span>Invest</span></a></li>
+					</ul>
+				</div>
+			</div>
 
-		<!-- Banner -->
-			<section id="banner">
-				<h2>Welcome to Bitwise Investments</h2>
-				<p>The Smarter, Safer Way to Grow Your Bitcoin</p>
-				<ul class="actions">
-					<li>
-						<a href="invest.php" class="button big">Invest Now</a>
-					</li>
-				</ul>
-			</section>
+		</div>
+	</nav>
 
-		<!-- One -->
-			<section id="one" class="wrapper style1 special">
-				<div class="container">
-					<header class="major">
-						<h2>Why Bitwise?</h2>
-						<p>Invest with Bitwise today and earn 16% daily compounding interest</p>
-					</header>
-					<div class="row 150%">
-						<div class="4u 12u$(medium)">
-							<section class="box">
-								<i class="icon big rounded color1 fa-bitcoin"></i>
-								<h3>Broad Investment Spectrum</h3>
-								<p>0.001btc Minimum Investment </br> 5btc Maximum Investment </br> Small or large investment- Choice is yours!</p>
-							</section>
-						</div>
-						<div class="4u 12u$(medium)">
-							<section class="box">
-								<i class="icon big rounded color9 fa-dashboard"></i>
-								<h3>No Commitment Investing</h3>
-								<p>Using our investment dashboard, you can divest partially or wholly instantly at any time- No strings attached!</p>
-							</section>
-						</div>
-						<div class="4u$ 12u$(medium)">
-							<section class="box">
-								<i class="icon big rounded color6 fa-line-chart"></i>
-								<h3>No Fees, Big Growth</h3>
-								<p>Bitwise Investments takes no fees off your investment. You will earn 16% daily compounding interest, guaranteed!</p>
-							</section>
+	<header id="gtco-header" class="gtco-cover" role="banner" style="background-image:url(images/img_bg_1.jpg);">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<div class="display-t">
+						<div class="display-tc animate-box" data-animate-effect="fadeIn">
+							<h1>ShittyName</h1>
+							<h2>The Smarter, Safer Way To Grow your Crypto</a></h2>
+							<p><a href="#" class="btn btn-default">Get Started</a></p>
 						</div>
 					</div>
 				</div>
-			</section>
+			</div>
+		</div>
+	</header>
 
-		<!-- Three -->
-			<section id="three" class="wrapper style3 special">
-				<div class="container">
-					<header class="major">
-						<h2>Questions? Concerns?</h2>
-						<p>Email our admins!</p>
-					</header>
+	<div id="gtco-features">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="col-md-4 col-sm-4">
+					<div class="feature-center animate-box" data-animate-effect="fadeIn">
+						<span class="icon">
+							<i class="fa fa-clock-o"></i>
+						</span>
+						<h3>Choose Your Plan</h3>
+						<p>Don't want to leave your deposit for a long time? Select the growth plan that fits you best!</p>
+					</div>
 				</div>
-				<div class="container 50%">
-					<form action="submit_ticket.php" method="post">
-						<div class="row uniform">
-							<div class="6u 12u$(small)">
-								<input name="name" id="name" value="" placeholder="Unique ID (Optional)" type="text">
+				<div class="col-md-4 col-sm-4">
+					<div class="feature-center animate-box" data-animate-effect="fadeIn">
+						<span class="icon">
+							<i class="fa fa-line-chart"></i>
+						</span>
+						<h3>No Fees, Big Growth</h3>
+						<p>ShittyName will never take fees from your earnings. All the crypto generated goes straight to you!</p>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4">
+					<div class="feature-center animate-box" data-animate-effect="fadeIn">
+						<span class="icon">
+							<i class="fa fa-life-ring"></i>
+						</span>
+						<h3>get help, anytime</h3>
+						<p>If you ever run into an issue, just send us an email. Our support staff would be glad to get back to you as quickly as possible!</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="gtco-started">
+		<div class="gtco-container">
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+					<h2>Get Started</h2>
+				</div>
+			</div>
+			<div class="row animate-box">
+				<div class="col-md-12">
+					<?php
+						if (isset($_GET["depadd"]) && preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $_GET["depadd"])) {
+							echo("<img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . $_GET["depadd"] . "/>");
+							echo "<p>Deposit Address:<br/>" . $_GET["depadd"] . "</p>";
+							echo "<p>Your UUID <strong>(Save This)</strong>:<br />" . $_GET["uuid"]. "</p>";
+						} else if (!hasUniqueIDSet()) { // shown when submit is not pressed, and when they havent input a UUID
+							echo "<form class='form-inline' action='create_plan.php' method='POST'>
+									<div class='col-md-4 col-sm-4'>
+										<div class='form-group'>
+											  <select class='form-control' name='plan_dropdown'>
+												<option value='-1' style='color:black'>Select Plan</option>
+												<option value='1' style='color:black'>24 hours</option>
+												<option value='2' style='color:black'>48 hours</option>
+												<option value='3' style='color:black'>5 day</option>
+											  </select>
+										</div>
+									</div>
+									<div class='col-md-4 col-sm-4'>
+										<div class='form-group'>
+											<label for='text' class='sr-only'>Wallet Address to Withdraw to</label>
+											<input type='text' class='form-control' name='withdraw_address' placeholder='Wallet Address To Withdraw To'>
+										</div>
+									</div>
+									<div class='col-md-4 col-sm-4'>
+										<input type='submit' name='submit' class='btn btn-default btn-block'>
+									</div>
+								</form>";
+						} else {	// shown when the user inputs a UUID to view stats/addresses
+							echo("<center><img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . fetchDepositAddress(getSessionUUID(), $db) . "/>");
+							echo "<p>Deposit Address:<br/>" . fetchDepositAddress(getSessionUUID(), $db) . "</p></center>";
+						}
+					?>
+					<center><p>Alternatively, input your UUID to view your statistics and wallet information:</p>
+					<form action="input_uuid.php" method="GET">
+						<input type='text' name='uuid' placeholder='Your UUID'><br/>
+						<input type='submit' name='submit'>
+					</form></center>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+		<div id="gtco-services">
+			<div class="gtco-container">
+
+				<div class="row animate-box">
+					<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+						<h2>Growth Plans</h2>
+						<p>Choose what best fits your needs for Bitcoin growth</p>
+					</div>
+				</div>
+
+				<div class="row animate-box">
+
+					<div class="gtco-tabs">
+						<ul class="gtco-tab-nav">
+							<li class="active"><a href="#" data-tab="1"><span class="icon visible-xs"><i class="icon-command"></i></span><span class="hidden-xs">24 Hour</span></a></li>
+							<li><a href="#" data-tab="2"><span class="icon visible-xs"><i class="icon-bar-graph"></i></span><span class="hidden-xs">48 Hour</span></a></li>
+							<li><a href="#" data-tab="3"><span class="icon visible-xs"><i class="icon-bag"></i></span><span class="hidden-xs">5 Day</span></a></li>
+						</ul>
+
+						<!-- Tabs -->
+						<div class="gtco-tab-content-wrap">
+
+							<div class="gtco-tab-content tab-content active" data-tab-content="1">
+								<div class="col-md-6">
+									<div class="icon icon-xlg">
+										<i class="fa fa-fast-forward" aria-hidden="true"></i>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<h2>24 Hour</h2>
+									<p>This plan is best for those looking for a little padding on their bitcoin wallet.</p>
+
+									<p>Your money is paid back on an hourly basis-- Every hour you will receive 4.6% of your deposit back in your wallet for 24hr. <hr>At the end of your growth period, you will be returned 110% of your deposit.</p>
+
+									<div class="row">
+										<div class="col-md-6">
+											<h2 class="uppercase">Total Returned</h2>
+											<p>110% per 24 hour cycle</p>
+										</div>
+										<div class="col-md-6">
+											<h2 class="uppercase">Deposit Limitations</h2>
+											<p>Deposits between ฿0.005 and ฿0.5<hr>Deposits outside this range will be considered donations and will not pay out.</p>
+										</div>
+									</div>
+
+								</div>
 							</div>
-							<div class="6u$ 12u$(small)">
-								<input name="email" id="email" value="" placeholder="Email" type="email">
+
+							<div class="gtco-tab-content tab-content" data-tab-content="2">
+								<div class="col-md-6">
+									<div class="icon icon-xlg">
+										<i class="icon-bar-graph"></i>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<h2>48 Hour</h2>
+									<p>This plan is best for those that can afford to wait a little more time, for a lot more bitcoin.</p>
+
+									<p>Your money is paid back every 6 hours-- Every installment you will receive 21% of your deposit back in your wallet for 48hr. <hr>At the end of your growth period, you will be returned 126% of your deposit.</p>
+
+									<div class="row">
+										<div class="col-md-6">
+											<h2 class="uppercase">Total Returned</h2>
+											<p>126% per 48 hour cycle</p>
+										</div>
+										<div class="col-md-6">
+											<h2 class="uppercase">Deposit Limitations</h2>
+											<p>Deposits between ฿0.01 and ฿.5<hr>Deposits outside this range will be considered donations and will not pay out.</p>
+										</div>
+									</div>
+
+								</div>
 							</div>
-							<div class="12u$">
-								<textarea name="message" id="message" placeholder="Message" rows="6"></textarea>
+
+							<div class="gtco-tab-content tab-content" data-tab-content="3">
+								<div class="col-md-6">
+									<div class="icon icon-xlg">
+										<i class="fa fa-btc"></i>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<h2>5 Day</h2>
+									<p>This plan is best for those that want a huge addition to their wallet.</p>
+
+									<p>Your money is paid back every 24 hours-- Every installment you will receive 40% of your deposit back in your wallet. <hr>At the end of your growth period, you will be returned 200% of your deposit.</p>
+									<div class="row">
+										<div class="col-md-6">
+											<h2 class="uppercase">Total Returned</h2>
+											<p>200% per 5 day cycle</p>
+										</div>
+										<div class="col-md-6">
+											<h2 class="uppercase">Deposit Limitations</h2>
+											<p>Deposits between ฿0.01 and ฿1<hr>Deposits outside this range will be considered donations and will not pay out.</p>
+										</div>
+									</div>
+
+								</div>
 							</div>
-							<div class="12u$">
-								<ul class="actions">
-									<li><input value="Send Message" class="special big" type="submit"></li>
-								</ul>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<div id="gtco-counter" class="gtco-bg gtco-counter" style="background-image:url(images/img_bg_2.jpg);">
+		<div class="gtco-container">
+			<div class="row">
+				<div class="display-t">
+					<div class="display-tc">
+						<div class="col-md-3 col-sm-6 animate-box">
+							<div class="feature-center">
+								<span class="icon">
+									<i class="fa fa-btc"></i>
+								</span>
+
+								<span class="counter js-counter" data-from="0" data-to="22070" data-speed="5000" data-refresh-interval="50">1</span>
+								<span class="counter-label">BTC Paid</span>
+
 							</div>
 						</div>
-					</form>
-				</div>
-			</section>
+						<div class="col-md-3 col-sm-6 animate-box">
+							<div class="feature-center">
+								<span class="icon">
+									<i class="fa fa-heart-o"></i>
+								</span>
 
-		<!-- Footer -->
-			<footer id="footer">
-				<div class="container">
-					<div class="row">
-						<div class="8u 12u$(medium)">
-							<ul class="copyright">
-								<li>&copy; Bitwise Investments. All rights reserved.</li> 
-								<?php  if (isAdmin($db, getName()) && isLoggedIn()) {
-									echo "<li><a href='admin_panel.php'>Admin Panel</a></li>";
-								} ?>
-							</ul>
+								<span class="counter js-counter" data-from="0" data-to="97" data-speed="5000" data-refresh-interval="50">1</span>
+								<span class="counter-label">Users Paid</span>
+							</div>
+						</div>
+						<div class="col-md-3 col-sm-6 animate-box">
+							<div class="feature-center">
+								<span class="icon">
+									<i class="fa fa-btc"></i>
+								</span>
+								<span class="counter js-counter" data-from="0" data-to="402" data-speed="5000" data-refresh-interval="50">1</span>
+								<span class="counter-label">BTC </hr>In Progress</span>
+							</div>
+						</div>
+						<div class="col-md-3 col-sm-6 animate-box">
+							<div class="feature-center">
+								<span class="icon">
+									<i class="fa fa-id-card-o"></i>
+								</span>
+
+								<span class="counter js-counter" data-from="0" data-to="212023" data-speed="5000" data-refresh-interval="50">1</span>
+								<span class="counter-label">Plans </hr>In Progress</span>
+
+							</div>
 						</div>
 					</div>
 				</div>
-			</footer>
+			</div>
+		</div>
+	</div>
+
+	<div id="gtco-testimonial">
+		<div class="gtco-container">
+			<!-- <div class="row"> -->
+				<div class="row animate-box">
+					<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+						<h2>Testimonial</h2>
+					</div>
+				</div>
+				<div class="row animate-box">
+
+
+					<div class="owl-carousel owl-carousel-fullwidth ">
+						<div class="item">
+							<div class="testimony-slide active text-center">
+								<figure>
+									<img src="images/person_1.jpg" alt="user">
+								</figure>
+								<span>Jean Doe, via <a href="#" class="twitter">Twitter</a></span>
+								<blockquote>
+									<p>&ldquo;Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+								</blockquote>
+							</div>
+						</div>
+						<div class="item">
+							<div class="testimony-slide active text-center">
+								<figure>
+									<img src="images/person_2.jpg" alt="user">
+								</figure>
+								<span>John Doe, via <a href="#" class="twitter">Twitter</a></span>
+								<blockquote>
+									<p>&ldquo;Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+								</blockquote>
+							</div>
+						</div>
+						<div class="item">
+							<div class="testimony-slide active text-center">
+								<figure>
+									<img src="images/person_3.jpg" alt="user">
+								</figure>
+								<span>John Doe, via <a href="#" class="twitter">Twitter</a></span>
+								<blockquote>
+									<p>&ldquo;Far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+								</blockquote>
+							</div>
+						</div>
+					</div>
+				</div>
+			<!-- </div> -->
+		</div>
+	</div>
+
+	<footer id="gtco-footer" role="contentinfo">
+		<div class="gtco-container">
+
+			<div class="row copyright">
+				<div class="col-md-12">
+					<p class="pull-left">
+						<small class="block">&copy; 2016 ShittyName. All Rights Reserved.</small>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Carousel -->
+	<script src="js/owl.carousel.min.js"></script>
+	<!-- countTo -->
+	<script src="js/jquery.countTo.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Main -->
+	<script src="js/main.js"></script>
 
 	</body>
 </html>

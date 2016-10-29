@@ -11,5 +11,5 @@ if ($res->rowCount() > 0) {
 	$_SESSION["uuid"] = $uuid;
 }
 
-header("Location: invest.php");
+header("Location: index.php#gtco-started");
 ?>
