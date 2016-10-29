@@ -156,7 +156,9 @@ require_once("functions.php");
 							echo "<p>Deposit Address:<br/>" . fetchDepositAddress(getSessionUUID(), $db) . "</p></center>";
 						}
 					?>
-					<center><p>Alternatively, input your UUID to view your statistics and wallet information:</p>
+					<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+					<p>Input your UUID to view your statistics and deposit information:</p>
+					</div>
 					<form action="input_uuid.php" method="GET">
 						<input type='text' name='uuid' placeholder='Your UUID'><br/>
 						<input type='submit' name='submit'>
@@ -164,7 +166,7 @@ require_once("functions.php");
 				</div>
 			</div>
 		</div>
-		
+
 	</div>
 
 		<div id="gtco-services">
