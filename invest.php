@@ -97,9 +97,9 @@
 									} else if (!hasUniqueIDSet()) { // shown when submit is not pressed, and when they havent input a UUID
 										echo "<form action='create_plan.php' method='POST'>
 											<input type='text' name='plan' placeholder='plan id-soon to be a button/dropdown or something'>
-											<input type='text' name='withdraw_address' placeholder='address you wish to withdraw to'><br/>
-											<center><div class='g-recaptcha' data-sitekey='6LffbhQTAAAAABC-WF-gGLNxK6dJR0jkOE_RsICk'></div></center><br/>
-											<input type='submit' name='submit'>
+											<input type='text' name='withdraw_address' placeholder='address you wish to withdraw to'><br/>" .
+											//<center><div class='g-recaptcha' data-sitekey='6LffbhQTAAAAABC-WF-gGLNxK6dJR0jkOE_RsICk'></div></center><br/>
+											"<input type='submit' name='submit'>
 											</form>";
 										echo "<p>By clicking submit, you automatically agree to our <a href=terms.php>terms & conditions</a>.</p>";
 									} else {	// shown when the user inputs a UUID to view stats/addresses

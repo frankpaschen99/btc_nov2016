@@ -54,6 +54,10 @@
 		$query = uuidQuery("SELECT withdrawal_address FROM users WHERE uuid = ?", $db, $uuid);
 		return $query["withdrawal_address"];
 	}
+	function resetLastPayout($uuid, $db) {
+		$query = "UPDATE users SET last_payout = NOW() WHERE uuid = ?";
+		$db->prepare($query)->execute([$uuid]);	// new way of doing this apparantly
+	}
 	/* Query the database WHERE username = ? using secure prepared statements */
 	function userQuery( $query, $db, $username ) {
 		$stmt = $db->prepare($query);
@@ -228,40 +232,49 @@
 	/* Extremely important function. Will be called by the script that runs every 60 minutes. Modified version of return_profits() */
 	function returnHourlyProfits($client, $db) {
 		foreach($client->getAccounts() as $acct) {
-			if (($acct->getName() == "BTC Wallet" || $acct->getName() == "Cold Wallet") || $acct->getBalance()->getAmount() <= 0) {
+			$user_acct_name = $acct->getName();
+			$acct_balance = $acct->getBalance()->getAmount();
+			if (($user_acct_name == "BTC Wallet" || $user_acct_name == "Cold Wallet") || $acct_balance < 0.0001) {
 				continue;
 			}
 			
-			$wallet_sql = userQuery("SELECT withdrawal_address FROM users WHERE uuid = ?", $db, $acct->getName());
+			$wallet_sql = userQuery("SELECT withdrawal_address FROM users WHERE uuid = ?", $db, $user_acct_name);
 			$user_wallet = $wallet_sql["withdrawal_address"];
-			$acct_balance = $acct->getBalance()->getAmount();
-			$plan = fetchPlan($acct->getName(), $db);
-			$return_on_investment;
 			
-			/* Timestamp cancer */
-			$datetime1 = new DateTime();
-			$datetime1->setTimestamp(time());
-			$datetime2 = new DateTime(fetchLastPayout($acct->getName(), $db));
-			$elapsed = $datetime1->diff($datetime2)->format('%i');
+			$plan = fetchPlan($user_acct_name, $db);
+			$return = -1;
 			
-			/* Calculate ROI based on plan */
-			switch($plan) {
-				case 1:	// every 24 hrs
-					$return_on_investment = ($acct_balance * $GLOBALS["ROI"]) / 24;	// this is how math works right
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				default:
+			/* Duration calculations */
+			$datetime1 = new DateTime;
+			$datetime1->setTimestamp(time());	// set datetime1 to the Unix epoch
+			$datetime2 = new DateTime(fetchLastPayout($user_acct_name, $db));	// set datetime2 to the user's last_payout
+			$elapsed = $datetime1->diff($datetime2)->format('%i');	// get the minutes between the two datetimes
+			
+			if ($plan == 1) {
+				// 24 hour plan.
+			} else if ($plan == 2) {
+				// 48 hour plan
+			} else if ($plan == 3) {
+				// 5 day plan
+			} else if ($plan == 4) {
+				// 7 day plan. 200% after 7 days, 28.57% daily
+				if ($elapsed >= 1435 && $elapsed <= 1445) {	// 5 minutes +- 24 hours
+					$return = $acct_balance * 0.2857;
+				}
+			} else {
+				return;	// something bad happened
 			}
 			
-			// if it's been within 5 minutes of an hour, send them their money
-			if ($elapsed > 55 && $elapsed < 65) {
+			// Another safeguard to make sure we're not sending an empty transaction
+			if ($return > 0) {
+				// Update user's last_payout
+				resetLastPayout($user_acct_name, $db);
+				
+				// Send the transaction
 				$transaction = Transaction::send([
-					'toBitcoinAddress' => $user_wallet,
-					'amount'           => new Money($return_on_investment, CurrencyCode::BTC),
-					'description'      => 'Return on Investment'
+				'toBitcoinAddress' => $user_wallet,
+				'amount'           => new Money($return_on_investment, CurrencyCode::BTC),
+				'description'      => 'Return on Investment'
 				]);
 				$client->createAccountTransaction($acct, $transaction);
 			}

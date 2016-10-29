@@ -10,7 +10,7 @@ use Coinbase\Wallet\Client;
 use Coinbase\Wallet\Configuration;
 use Coinbase\Wallet\Resource\Address;
 
-$public_key = '6LffbhQTAAAAABC-WF-gGLNxK6dJR0jkOE_RsICk';
+/*$public_key = '6LffbhQTAAAAABC-WF-gGLNxK6dJR0jkOE_RsICk';
 $private_key = '6LffbhQTAAAAAH_0_ieczUXzlx6fbFaDjkFKMBjx';
 
 $recaptcha = new \ReCaptcha\ReCaptcha($private_key);
@@ -18,7 +18,7 @@ $resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR
 		
 if (!$resp->isSuccess()) {
 	echo "reCAPTCHA failed";
-}
+}*/
 
 if(isset($_POST["submit"])) {
 	$wd_add = $_POST["withdraw_address"];
