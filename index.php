@@ -126,7 +126,7 @@ require_once("functions.php");
 				<div class="col-md-12">
 					<?php
 						if (isset($_GET["depadd"]) && preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $_GET["depadd"])) {
-							echo("<img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . $_GET["depadd"] . "/>");
+							echo("<div class='col-md-8 col-md-offset-2 text-center gtco-heading'><img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . $_GET["depadd"] . "/></div>");
 							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
 							<h4>Deposit Address:<br/>" . $_GET["depadd"] . "</h4>
 							</div>";
