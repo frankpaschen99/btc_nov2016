@@ -269,19 +269,28 @@
 			$elapsed = $datetime1->diff($datetime2)->format('%i');	// get the minutes between the two datetimes
 			
 			if ($plan == 1) {
+				if ($times_payed == 24) {
+					continue;
+				}
 				// 24 hour plan.
 				if ($elapsed >= 55) {
-					$return = fetchStaticBalance($user_acct_name, $db) * 0.46;
+					$return = fetchStaticBalance($user_acct_name, $db) * 0.046;
 				}
 			} else if ($plan == 2) {
+				if ($times_payed == 8) {
+					continue;
+				}
 				// 48 hour plan
 				if ($elapsed >= 355) {
-					$return = fetchStaticBalance($user_acct_name, $db) * 0.21;
+					$return = fetchStaticBalance($user_acct_name, $db) * 0.02625;
 				}
 			} else if ($plan == 3) {
+				if ($times_payed == 5) {
+					continue;
+				}
 				// 5 day plan
 				if ($elapsed >= 7195) {
-					$return = fetchStaticBalance($user_acct_name, $db) * 0.40;
+					$return = fetchStaticBalance($user_acct_name, $db) * 0.4;
 				}
 			} else {
 				return;	// something bad happened
