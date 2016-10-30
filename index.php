@@ -295,7 +295,8 @@ require_once("functions.php");
 			</div>
 		</div>
 
-	<div id="gtco-counter" class="gtco-bg gtco-counter" style="background-image:url(images/img_bg_2.jpg);">
+	<!-- Uncomment this when we actually have legit data to post there -->
+	<!--<div id="gtco-counter" class="gtco-bg gtco-counter" style="background-image:url(images/img_bg_2.jpg);">
 		<div class="gtco-container">
 			<div class="row">
 				<div class="display-t">
@@ -345,11 +346,11 @@ require_once("functions.php");
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>-->
 
-	<div id="gtco-testimonial">
+	<!-- uncomment when we actually have testimonials-->
+	<!--<div id="gtco-testimonial">
 		<div class="gtco-container">
-			<!-- <div class="row"> -->
 				<div class="row animate-box">
 					<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
 						<h2>Testimonial</h2>
@@ -394,9 +395,8 @@ require_once("functions.php");
 						</div>
 					</div>
 				</div>
-			<!-- </div> -->
 		</div>
-	</div>
+	</div>-->
 
 	<footer id="gtco-footer" role="contentinfo">
 		<div class="gtco-container">
