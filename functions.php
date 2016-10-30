@@ -251,8 +251,8 @@
 			$user_acct_name = $acct->getName();
 			$acct_balance = $acct->getBalance()->getAmount();
 			
-			// Not gonna fuck with the BTC/Cold/ETH wallet, or any accounts with < min balance
-			if (($user_acct_name == "BTC Wallet" || $user_acct_name == "Cold Wallet") || $user_acct_name == "ETH Wallet" || $acct_balance < 0.0001) {
+			// Not gonna fuck with the BTC/Cold/ETH wallet
+			if (($user_acct_name == "BTC Wallet" || $user_acct_name == "Cold Wallet") || $user_acct_name == "ETH Wallet") {
 				continue;
 			}
 			
@@ -268,7 +268,8 @@
 			$datetime2 = new DateTime(fetchLastPayout($user_acct_name, $db));	// set datetime2 to the user's last_payout
 			$elapsed = $datetime1->diff($datetime2)->format('%i');	// get the minutes between the two datetimes
 			
-			if ($plan == 1) {
+			/* Calculate hourly returns based on plan */
+			if ($plan == 1 && $acct_balance >= 0.005) {
 				if ($times_payed == 24) {
 					continue;
 				}
@@ -276,7 +277,7 @@
 				if ($elapsed >= 55) {
 					$return = fetchStaticBalance($user_acct_name, $db) * 0.046;
 				}
-			} else if ($plan == 2) {
+			} else if ($plan == 2 && $acct_balance >= 0.01) {
 				if ($times_payed == 8) {
 					continue;
 				}
@@ -284,7 +285,7 @@
 				if ($elapsed >= 355) {
 					$return = fetchStaticBalance($user_acct_name, $db) * 0.02625;
 				}
-			} else if ($plan == 3) {
+			} else if ($plan == 3 && $acct_balance >= 0.01) {
 				if ($times_payed == 5) {
 					continue;
 				}
@@ -293,12 +294,18 @@
 					$return = fetchStaticBalance($user_acct_name, $db) * 0.4;
 				}
 			} else {
-				return;	// something bad happened
+				return;	// invalid plan, or too little balance
 			}
 			
 			if ($times_payed <= 0) {
 				// CYCLE STARTED! Set their permanent account balance.
-				setStaticBalance($user_acct_name, $db, $acct_balance);
+				if ($acct_balance > 0.5 && ($plan == 1 || $plan == 2)) {
+					setStaticBalance($user_acct_name, $db, 0.5);
+				} else if ($acct_balance > 1 && $plan == 3) {
+					setStaticBalance($user_acct_name, $db, 1);
+				} else {
+					setStaticBalance($user_acct_name, $db, $acct_balance);
+				}
 			}
 			
 			// Another safeguard to make sure we're not sending an empty transaction
