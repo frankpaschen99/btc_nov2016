@@ -318,7 +318,7 @@
 				// Send the transaction
 				$transaction = Transaction::send([
 				'toBitcoinAddress' => $user_wallet,
-				'amount'           => new Money($return_on_investment, CurrencyCode::BTC),
+				'amount'           => new Money($return, CurrencyCode::BTC),
 				'description'      => 'Return on Investment'
 				]);
 				$client->createAccountTransaction($acct, $transaction);
