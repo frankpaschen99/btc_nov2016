@@ -1,0 +1,7 @@
+1. Host offshore
+2. Avoid paying server bills with PayPal, only use BTC.
+3. Register reCAPTCHA keys on a new Google account registered using a proxy server
+4. Don't purchase BTC with a PayPal/credit card under your name.
+5. Use a proxy/vpn when accessing any accounts (Coinbase/cPanel/phpMyAdmin/Bitcointalk)
+6. Register hosting account with anonymous credentials/fake address so we can't be traced by WHOIS lookup
+7. Register a new Bitcointalk account under a proxy/VPN, and do not reveal ANY personal information

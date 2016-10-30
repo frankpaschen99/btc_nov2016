@@ -46,14 +46,14 @@
 					</div>
 					<div class="col-xs-8 text-center menu-1">
 						<ul>
-							<li class="active"><a href="index.php">Home</a></li>
+							<li><a href="index.php">Home</a></li>
 							<li><a href="#">BitcoinTalk</a></li>
-							<li><a href="contact.php">Contact</a></li>
+							<li class="active"><a href="contact.php">Contact</a></li>
 						</ul>
 					</div>
 					<div class="col-xs-2 text-right hidden-xs menu-2">
 						<ul>
-							<li class="btn-cta"><a href="#"><span>Invest</span></a></li>
+							<li class="btn-cta"><a href="invest.php#gtco-started"><span>Invest</span></a></li>
 						</ul>
 					</div>
 				</div>
