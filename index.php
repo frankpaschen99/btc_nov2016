@@ -141,27 +141,19 @@ require_once("functions.php");
 							<h4>Your UUID (Save This):<br />" . $_GET["uuid"]. "</h4></div>";
 						} else if (!hasUniqueIDSet()) { // shown when submit is not pressed, and when they havent input a UUID
 							echo "<form class='form-inline' action='create_plan.php' method='POST'>
-									<div class='col-md-4 col-sm-4'>
-										<div class='form-group'>
-											  <select class='form-control' name='plan_dropdown'>
-												<option value='-1' style='color:black'>Select Plan</option>
-												<option value='1' style='color:black'>24 hours</option>
-												<option value='2' style='color:black'>48 hours</option>
-												<option value='3' style='color:black'>5 day</option>
-											  </select>
-										</div>
+									<div class='form-group'>
+										  <select class='form-control' style='width:40%' name='plan_dropdown'>
+											<option value='-1' style='color:black'>Select Plan</option>
+											<option value='1' style='color:black'>24 hours</option>
+											<option value='2' style='color:black'>48 hours</option>
+											<option value='3' style='color:black'>5 day</option>
+										  </select>
 									</div>
-									<div class='col-md-4 col-sm-4'>
-										<div class='form-group'>
-											<label for='text' class='sr-only'>Wallet Address to Withdraw to</label>
-											<input type='text' class='form-control' name='withdraw_address' placeholder='Wallet Address To Withdraw To'>
-										</div>
+									<div class='form-group'>
+										<label for='text' class='sr-only'>Wallet Address to Withdraw to</label>
+										<input type='text' style='width:40%' class='form-control' name='withdraw_address' placeholder='Wallet Address To Withdraw To'>
 									</div>
-									<div class='col-md-4 col-sm-4'>
-										<div class='g-recaptcha' data-sitekey='6LffbhQTAAAAABC-WF-gGLNxK6dJR0jkOE_RsICk'></div>
-									</div>
-									<br />
-									<br />
+									<center><div class='g-recaptcha' data-sitekey='6LffbhQTAAAAABC-WF-gGLNxK6dJR0jkOE_RsICk'></div></center>
 									<br />
 									<center><input type='submit' style='width:25%' name='submit' class='btn btn-default btn-block'></center>
 								</form>";
