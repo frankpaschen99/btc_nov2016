@@ -59,7 +59,7 @@ require_once("functions.php");
 				</div>
 				<div class="col-xs-2 text-right hidden-xs menu-2">
 					<ul>
-						<li class="btn-cta"><a href="#"><span>Invest</span></a></li>
+						<li class="btn-cta"><a href="#gtco-started"><span>Invest</span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -75,7 +75,7 @@ require_once("functions.php");
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
 							<h1>ShittyName</h1>
 							<h2>The Smarter, Safer Way To Grow your Crypto</a></h2>
-							<p><a href="#" class="btn btn-default">Get Started</a></p>
+							<p><a href="#gtco-started" class="btn btn-default">Get Started</a></p>
 						</div>
 					</div>
 				</div>
