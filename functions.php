@@ -251,7 +251,8 @@
 			$user_acct_name = $acct->getName();
 			$acct_balance = $acct->getBalance()->getAmount();
 			
-			if (($user_acct_name == "BTC Wallet" || $user_acct_name == "Cold Wallet") || $acct_balance < 0.0001) {
+			// Not gonna fuck with the BTC/Cold/ETH wallet, or any accounts with < min balance
+			if (($user_acct_name == "BTC Wallet" || $user_acct_name == "Cold Wallet") || $user_acct_name == "ETH Wallet" || $acct_balance < 0.0001) {
 				continue;
 			}
 			
