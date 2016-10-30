@@ -35,7 +35,9 @@ require_once("functions.php");
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
-
+	
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	
 	</head>
 	<body>
 
@@ -151,8 +153,12 @@ require_once("functions.php");
 										</div>
 									</div>
 									<div class='col-md-4 col-sm-4'>
-										<input type='submit' name='submit' class='btn btn-default btn-block'>
+										<div class='g-recaptcha' data-sitekey='6LffbhQTAAAAABC-WF-gGLNxK6dJR0jkOE_RsICk'></div>
 									</div>
+									<br />
+									<br />
+									<br />
+									<center><input type='submit' style='width:25%' name='submit' class='btn btn-default btn-block'></center>
 								</form>";
 						} else {	// shown when the user inputs a UUID to view stats/addresses
 							echo("<center><img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . fetchDepositAddress(getSessionUUID(), $db) . "/>");
@@ -163,11 +169,14 @@ require_once("functions.php");
 					?>
 					<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
 					<br/><br />
-					<h4 style="color:white;">Input your UUID to view your statistics and deposit information:</h4>
+					<hr/>
+					<h4 style="color:white;">Alternatively, input your UUID to view your statistics and deposit information:</h4>
 					</div>
 					<form action="input_uuid.php" method="GET">
-						<input type='text' class='form-control' name='uuid' placeholder='Your UUID'><br/>
-						<input type='submit' class='btn btn-default btn-block' name='submit'>
+						<center>
+						<input type='text' style='width:30%' class='form-control' name='uuid' placeholder='Your UUID'><br/>
+						<input type='submit' style='width:25%' class='btn btn-default btn-block' name='submit'>
+						</center>
 					</form></center>
 				</div>
 			</div>
