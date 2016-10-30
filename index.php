@@ -135,10 +135,10 @@ require_once("functions.php");
 						if (isset($_GET["depadd"]) && preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $_GET["depadd"])) {
 							echo("<div class='col-md-8 col-md-offset-2 text-center gtco-heading'><img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . $_GET["depadd"] . "/></div>");
 							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
-							<h4>Deposit Address:<br/>" . $_GET["depadd"] . "</h4>
+							<h4 style='color:white'>Deposit Address:<br/>" . $_GET["depadd"] . "</h4>
 							</div>";
 							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
-							<h4>Your UUID (Save This):<br />" . $_GET["uuid"]. "</h4></div>";
+							<h4 style='color:white'>Your UUID (Save This):<br />" . $_GET["uuid"]. "</h4></div>";
 						} else if (!hasUniqueIDSet()) { // shown when submit is not pressed, and when they havent input a UUID
 							echo "<form class='form-inline' action='create_plan.php' method='POST'>
 									<div class='form-group'>
@@ -156,25 +156,29 @@ require_once("functions.php");
 									<center><div class='g-recaptcha' data-sitekey='6LffbhQTAAAAABC-WF-gGLNxK6dJR0jkOE_RsICk'></div></center>
 									<br />
 									<center><input type='submit' style='width:25%' name='submit' class='btn btn-default btn-block'></center>
-								</form>";
+								</form><br/><hr><br />";
+							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'> 
+									<h4 style='color:white;'>Alternatively, input your UUID to view your statistics and deposit information:</h4>
+									</div>
+									<form action='input_uuid.php' method='GET'>
+										<center>
+										<input type='text' style='width:30%' class='form-control' name='uuid' placeholder='Your UUID'><br/>
+										<input type='submit' style='width:25%' class='btn btn-default btn-block' name='submit'>
+										</center>
+									</form></center>";
 						} else {	// shown when the user inputs a UUID to view stats/addresses
-							echo("<center><img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . fetchDepositAddress(getSessionUUID(), $db) . "/>");
+							$uuid = getSessionUUID();
+							echo("<div class='col-md-8 col-md-offset-2 text-center gtco-heading'><img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . fetchDepositAddress(getSessionUUID(), $db) . "/></div>");
 							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
-							<h4>Deposit Address:<br/>" . fetchDepositAddress(getSessionUUID(), $db) . "</h4>
-							</div></center>";
+							<h4 style='color:white'>Deposit Address:<br/>" . fetchDepositAddress($uuid, $db) . "</h4>
+							</div>";
+							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
+							<h4 style='color:white'>Your UUID (Save This):<br />" . $uuid . "</h4></div>";
+							
+							// TODO: Transaction history/stats here
 						}
 					?>
-					<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
 					<br/><br />
-					<hr/>
-					<h4 style="color:white;">Alternatively, input your UUID to view your statistics and deposit information:</h4>
-					</div>
-					<form action="input_uuid.php" method="GET">
-						<center>
-						<input type='text' style='width:30%' class='form-control' name='uuid' placeholder='Your UUID'><br/>
-						<input type='submit' style='width:25%' class='btn btn-default btn-block' name='submit'>
-						</center>
-					</form></center>
 				</div>
 			</div>
 		</div>
