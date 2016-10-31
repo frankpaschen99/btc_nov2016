@@ -1,12 +1,25 @@
 <?php
-	require_once("functions.php");
-	require_once("config.php");
-	echo "<h2>Frank's Super Neat and Functional Admin Panel</h2>";
-	/*if (!isAdmin($db, getName()) || !isLoggedIn()) {
-		header("https://bitwiseinvestments.com/");
-		die();
-	}*/
+require_once("functions.php");
+require_once("config.php");
 	
+$verification;
+$logged_in = false;
+if (isset($_POST["submit"])) {
+	$token = $_POST["token"];
+	$name = $_POST["name"];
+
+	if ($name == "Frank") {
+		$verification = $authy_api->verifyToken('1420166', $token);
+	} else if ($name == "Pedro") {
+		$verification = $authy_api->verifyToken('27878460', $token);
+	} else {
+		echo "Something bad happened<br />";
+	}
+}
+
+if (isset($_POST["submit"]) && $verification->ok()) {
+	$logged_in = true;
+	echo "<h2>Frank's Super Neat and Functional Admin Panel</h2>";
 	// Support tickets
 	$stmt = $db->query("SELECT * FROM tickets");
 
@@ -17,7 +30,7 @@
 		 <td><b>Message</b></td>
 		 <td><b>Date</b></td>
 		 </tr><br /><tr/>";
-	
+
 	while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
 	{
 		$user = $row['uuid'];
@@ -31,6 +44,7 @@
 		echo '<td>' . $date . '</td>';
 		echo '</tr><br />';	
 	}
+}
 ?>
 
 <html>
@@ -78,4 +92,16 @@
 		color: initial;
 	}
 	</style>
+	<body>
+		<?php
+			if (!$logged_in) {
+				echo "<form method='POST' action='admin_panel.php'>
+			<input type='radio' name='name' value='Frank'>Frank<br/>
+			<input type='radio' name='name' value='Pedro'>Pedro<br/>
+			<input type='text' name='token' placeholder='Authy Token'><br>
+			<input type='submit' name='submit' value='Submit'>
+		</form>";
+			}
+		?>
+	</body>
 </html>

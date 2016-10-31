@@ -11,6 +11,7 @@ use Coinbase\Wallet\Exception\InvalidTokenException;
 use Coinbase\Wallet\Exception\RevokedTokenException;
 use Coinbase\Wallet\Resource\Account;
 use Coinbase\Wallet\Resource\Address;
+use Coinbase\Wallet\Resource\Notification;
 use Coinbase\Wallet\Resource\CurrentUser;
 use Coinbase\Wallet\Resource\PaymentMethod;
 use Coinbase\Wallet\Resource\ResourceCollection;
@@ -120,23 +121,65 @@ class ClientIntegrationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('CAD', $data['currency']);
     }
 
-    public function testGetBuyPrice()
+    public function testGetBuyPrice1()
     {
         $price = $this->client->getBuyPrice();
 
         $this->assertInstanceOf(Money::class, $price);
     }
 
-    public function testGetSellPrice()
+    public function testGetBuyPrice2()
+    {
+        $price = $this->client->getBuyPrice('USD');
+
+        $this->assertInstanceOf(Money::class, $price);
+    }
+
+    public function testGetBuyPrice3()
+    {
+        $price = $this->client->getBuyPrice('ETH-USD');
+
+        $this->assertInstanceOf(Money::class, $price);
+    }
+
+    public function testGetSellPrice1()
     {
         $price = $this->client->getSellPrice();
 
         $this->assertInstanceOf(Money::class, $price);
     }
 
-    public function testGetSpotPrice()
+    public function testGetSellPrice2()
+    {
+        $price = $this->client->getSellPrice('USD');
+
+        $this->assertInstanceOf(Money::class, $price);
+    }
+
+    public function testGetSellPrice3()
+    {
+        $price = $this->client->getSellPrice('ETH-USD');
+
+        $this->assertInstanceOf(Money::class, $price);
+    }
+
+    public function testGetSpotPrice1()
     {
         $price = $this->client->getSpotPrice();
+
+        $this->assertInstanceOf(Money::class, $price);
+    }
+
+    public function testGetSpotPrice2()
+    {
+        $price = $this->client->getSpotPrice('USD');
+
+        $this->assertInstanceOf(Money::class, $price);
+    }
+
+    public function testGetSpotPrice3()
+    {
+        $price = $this->client->getSpotPrice('ETH-USD');
 
         $this->assertInstanceOf(Money::class, $price);
     }
@@ -283,6 +326,25 @@ class ClientIntegrationTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertInstanceOf(PaymentMethod::class, $paymentMethods[0]);
+    }
+
+    public function testGetHistoricPrices() {
+        $historicPrices = $this->client->getHistoricPrices('CAD');
+
+        $this->assertEquals("array", gettype($historicPrices));
+        $this->assertEquals('CAD', $historicPrices['currency']);
+        $this->assertEquals(365, sizeof($historicPrices['prices']));
+    }
+
+    public function testGetNotifications() {
+        $notifications = $this->client->getNotifications();
+        $this->assertInstanceOf(ResourceCollection::class, $notifications);
+
+        if (!isset($notifications[0])) {
+            $this->markTestSkipped('User has no notifications');
+        }
+
+        $this->assertInstanceOf(Notification::class, $notifications[0]);
     }
 
     // private

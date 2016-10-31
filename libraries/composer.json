@@ -1,0 +1,6 @@
+{
+	"require": {
+		"coinbase/coinbase": "~2.0",
+		"authy/php": "2.*"
+	}
+}

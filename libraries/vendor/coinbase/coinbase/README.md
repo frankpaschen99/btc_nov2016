@@ -16,9 +16,13 @@ the [older version][2] of this library.
 
 ## Installation
 
-Install the library using Composer.
+Install the library using Composer. Please read the [Composer Documentation](https://getcomposer.org/doc/01-basic-usage.md) if you are unfamiliar with Composer or dependency managers in general.
 
-    composer require coinbase/coinbase
+```json
+"require": {
+    "coinbase/coinbase": "~2.0"
+}
+```
 
 ## Authentication
 
@@ -232,19 +236,19 @@ $rates = $client->getExchangeRates();
 **Buy price**
 
 ```php
-$buyPrice = $client->getBuyPrice();
+$buyPrice = $client->getBuyPrice('BTC-USD');
 ```
 
 **Sell price**
 
 ```php
-$sellPrice = $client->getSellPrice();
+$sellPrice = $client->getSellPrice('BTC-USD');
 ```
 
 **Spot price**
 
 ```php
-$spotPrice = $client->getSpotPrice();
+$spotPrice = $client->getSpotPrice('BTC-USD');
 ```
 
 **Current server time**
@@ -344,7 +348,7 @@ $addresses = $client->getAccountAddresses($account);
 $address = $client->getAccountAddress($account, $addressId);
 ```
 
-**List transactiona for address**
+**List transactions for address**
 
 ```php
 $transactions = $client->getAddressTransactions($address);
@@ -385,7 +389,8 @@ use Coinbase\Wallet\Value\Money;
 $transaction = Transaction::send([
     'toBitcoinAddress' => 'ADDRESS',
     'amount'           => new Money(5, CurrencyCode::USD),
-    'description'      => 'Your first bitcoin!'
+    'description'      => 'Your first bitcoin!',
+    'fee'              => '0.0001' // only required for transactions under BTC0.0001
 ]);
 
 $client->createAccountTransaction($account, $transaction);
@@ -664,6 +669,29 @@ $client->refundOrder($order, CurrencyCode::BTC);
 $checkouts = $client->getCheckouts();
 ```
 
+#### Create checkout
+
+```php
+use Coinbase\Wallet\Resource\Checkout;
+
+$params = array(
+    'name'               => 'My Order',
+    'amount'             => new Money(100, 'USD'),
+    'metadata'           => array( 'order_id' => $custom_order_id )
+);
+
+$checkout = new Checkout($params);
+$client->createCheckout($checkout);
+$code = $checkout->getEmbedCode();
+$redirect_url = "https://www.coinbase.com/checkouts/$code"; 
+```
+
+Note : If you use sandbox mode then you should use the sandbox url like this:
+
+```php
+$redirect_url = "https://sandbox.coinbase.com/checkouts/$code"; 
+```
+
 #### Get checkout
 
 ```php
@@ -682,11 +710,13 @@ $orders = $client->getCheckoutOrders($checkout);
 $order = $client->createNewCheckoutOrder($checkout);
 ```
 
-### [Verifying merchant callbacks](https://developers.coinbase.com/docs/merchants/callbacks)
+### [Notifications webhook and verification](https://developers.coinbase.com/docs/wallet/notifications)
+
+Note: Only production notifications can be verified. Notifications issued by the sandbox will always return false below.
 
 ```php
 $raw_body = file_get_contents('php://input');
-$signature = $_SERVER['HTTP_X_SIGNATURE'];
+$signature = $_SERVER['HTTP_CB_SIGNATURE'];
 $authenticity = $client->verifyCallback($raw_body, $signature); // boolean
 ```
 

@@ -7,6 +7,7 @@ use Coinbase\Wallet\Exception\LogicException;
 use Coinbase\Wallet\Exception\RuntimeException;
 use Coinbase\Wallet\Resource\Account;
 use Coinbase\Wallet\Resource\Address;
+use Coinbase\Wallet\Resource\Application;
 use Coinbase\Wallet\Resource\BitcoinAddress;
 use Coinbase\Wallet\Resource\Buy;
 use Coinbase\Wallet\Resource\Checkout;
@@ -22,6 +23,7 @@ use Coinbase\Wallet\Resource\Sell;
 use Coinbase\Wallet\Resource\Transaction;
 use Coinbase\Wallet\Resource\User;
 use Coinbase\Wallet\Resource\Withdrawal;
+use Coinbase\Wallet\Resource\Notification;
 use Coinbase\Wallet\Resource\BitcoinNetwork;
 use Coinbase\Wallet\Value\Fee;
 use Coinbase\Wallet\Value\Money;
@@ -123,7 +125,7 @@ class Mapper
         // filter
         $data = array_intersect_key(
             $this->extractData($transaction),
-            array_flip(['type', 'to', 'amount', 'description'])
+            array_flip(['type', 'to', 'amount', 'description', 'fee'])
         );
 
         // to
@@ -382,7 +384,7 @@ class Mapper
         // filter
         $data = array_intersect_key(
             $this->extractData($order),
-            array_flip(['amount', 'name', 'description', 'metadata'])
+            array_flip(['amount', 'name', 'description', 'notifications_url', 'metadata'])
         );
 
         // currency
@@ -417,7 +419,7 @@ class Mapper
     {
         $keys = [
             'amount', 'name', 'description', 'type', 'style',
-            'customer_defined_amount', 'amount_presets', 'success_url',
+            'customer_defined_amount', 'amount_presets', 'notifications_url', 'success_url',
             'cancel_url', 'auto_redirect', 'collect_shipping_address',
             'collect_email', 'collect_phone_number', 'collect_country',
             'metadata',
@@ -440,6 +442,20 @@ class Mapper
         }
 
         return $data;
+    }
+
+    // notifications
+
+    /** @return ResourceCollection */
+    public function toNotifications(ResponseInterface $response)
+    {
+        return $this->toCollection($response, 'injectNotification');
+    }
+
+    /** @return Notification */
+    public function toNotification(ResponseInterface $response, Notification $notification = null)
+    {
+        return $this->injectNotification($this->decode($response)['data'], $notification);
     }
 
     // misc
@@ -497,6 +513,11 @@ class Mapper
         return $this->injectResource($data, $address ?: new Address());
     }
 
+    private function injectApplication(array $data, Application $application = null)
+    {
+        return $this->injectResource($data, $application ?: new Application());
+    }
+
     private function injectTransaction(array $data, Transaction $transaction = null)
     {
         return $this->injectResource($data, $transaction ?: new Transaction());
@@ -540,6 +561,11 @@ class Mapper
     private function injectCheckout(array $data, Checkout $checkout = null)
     {
         return $this->injectResource($data, $checkout ?: new Checkout());
+    }
+
+    public function injectNotification(array $data, Notification $notification = null)
+    {
+        return $this->injectResource($data, $notification ?: new Notification());
     }
 
     private function injectResource(array $data, Resource $resource)
@@ -734,6 +760,8 @@ class Mapper
                 return $expanded ? $this->injectAccount($data) : new Account($data['resource_path']);
             case ResourceType::ADDRESS:
                 return $expanded ? $this->injectAddress($data) : new Address($data['resource_path']);
+            case ResourceType::APPLICATION:
+                return $expanded ? $this->injectApplication($data) : new Application($data['resource_path']);
             case ResourceType::BITCOIN_ADDRESS:
                 return new BitcoinAddress($data['address']);
             case ResourceType::BUY:
@@ -758,6 +786,8 @@ class Mapper
                 return $expanded ? $this->injectUser($data) : new User($data['resource_path']);
             case ResourceType::WITHDRAWAL:
                 return $expanded ? $this->injectWithdrawal($data) : new Withdrawal($data['resource_path']);
+            case ResourceType::NOTIFICATION:
+                return $expanded ? $this->injectNotification($data) : new Notification($data['resource_path']);
             case ResourceType::BITCOIN_NETWORK:
                 return new BitcoinNetwork();
             default:

@@ -19,6 +19,7 @@ use Coinbase\Wallet\Resource\Sell;
 use Coinbase\Wallet\Resource\Transaction;
 use Coinbase\Wallet\Resource\User;
 use Coinbase\Wallet\Resource\Withdrawal;
+use Coinbase\Wallet\Resource\Notification;
 
 /**
  * A client for interacting with the Coinbase API.
@@ -36,7 +37,7 @@ use Coinbase\Wallet\Resource\Withdrawal;
  */
 class Client
 {
-    const VERSION = '2.2.0';
+    const VERSION = '2.5.0';
 
     private $http;
     private $mapper;
@@ -104,29 +105,52 @@ class Client
 
     public function getBuyPrice($currency = null, array $params = [])
     {
-        if ($currency) {
-            $params['currency'] = $currency;
+        // If AAA-BBB format, use it. If fiat only given, use BTC-XXX.
+        // If undefined, use BTC-USD.
+        if (strpos($currency, '-') !== false) {
+            $pair = $currency;
+        } else if ($currency) {
+            $pair = 'BTC-' . $currency;
+        } else {
+            $pair = 'BTC-USD';
         }
 
-        return $this->getAndMapMoney('/v2/prices/buy', $params);
+        return $this->getAndMapMoney('/v2/prices/' . $pair . '/buy', $params);
     }
 
     public function getSellPrice($currency = null, array $params = [])
     {
-        if ($currency) {
-            $params['currency'] = $currency;
+        if (strpos($currency, '-') !== false) {
+            $pair = $currency;
+        } else if ($currency) {
+            $pair = 'BTC-' . $currency;
+        } else {
+            $pair = 'BTC-USD';
         }
 
-        return $this->getAndMapMoney('/v2/prices/sell', $params);
+        return $this->getAndMapMoney('/v2/prices/' . $pair . '/sell', $params);
     }
 
     public function getSpotPrice($currency = null, array $params = [])
+    {
+        if (strpos($currency, '-') !== false) {
+            $pair = $currency;
+        } else if ($currency) {
+            $pair = 'BTC-' . $currency;
+        } else {
+            $pair = 'BTC-USD';
+        }
+
+        return $this->getAndMapMoney('/v2/prices/' . $pair . '/spot', $params);
+    }
+
+    public function getHistoricPrices($currency = null, array $params = [])
     {
         if ($currency) {
             $params['currency'] = $currency;
         }
 
-        return $this->getAndMapMoney('/v2/prices/spot', $params);
+        return $this->getAndMapData('/v2/prices/historic', $params);
     }
 
     public function getTime(array $params = [])
@@ -681,6 +705,45 @@ class Client
     {
         $data = $this->mapper->fromCheckout($checkout);
         $this->postAndMap('/v2/checkouts', $data + $params, 'toCheckout', $checkout);
+    }
+
+    /**
+     * Lists notifications where the current user was the subscriber.
+     *
+     * Supports pagination parameters.
+     *
+     * @return ResourceCollection|Notification[]
+     */
+    public function getNotifications(array $params = [])
+    {
+        return $this->getAndMapCollection('/v2/notifications', $params, 'toNotifications');
+    }
+
+    public function loadNextNotifications(ResourceCollection $notifications, array $params = [])
+    {
+        $this->loadNext($notifications, $params, 'toNotifications');
+    }
+
+    /** @return Notification */
+    public function getNotification($notificationId, array $params = [])
+    {
+        return $this->getAndMap('/v2/notifications/'.$notificationId, $params, 'toNotification');
+    }
+
+    public function refreshNotification(Notification $notification, array $params = [])
+    {
+        $this->getAndMap($notification->getResourcePath(), $params, 'toNotification', $notification);
+    }
+
+    /**
+     * Create a Notification object from the body of a notification webhook
+     *
+     * @return Notification
+     */
+    public function parseNotification($webhook_body)
+    {
+        $data = json_decode($webhook_body, true);
+        return $this->mapper->injectNotification($data);
     }
 
     /**

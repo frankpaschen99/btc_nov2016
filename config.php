@@ -21,5 +21,8 @@
 	$configuration = Configuration::apiKey('vh3GZE5QALqHONWf', 'Kcu3F2LWx6PcfKmluVNhYJvd2UHq9csY');
 	$client = Client::create($configuration);
 	
+	// Authy for admin panel
+	$authy_api = new Authy\AuthyApi('LFE45z5BgyU4nVGBdjAnsSnVm4tzIVzy');
+	
 	error_reporting(E_ALL & ~E_NOTICE);
 ?>

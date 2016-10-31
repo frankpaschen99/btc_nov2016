@@ -66,13 +66,30 @@
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<div class="display-t">
-						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>Get In Touch</h1>
-							<h2>We'll answer you as quickly as we can!</h2>
-						</div>
+						<?php
+							if(!empty($_GET["message"]) && $_GET["message"] == "success") {
+								echo "<div class='display-tc animate-box' data-animate-effect='fadeIn'>
+									<h1>Thank You</h1>
+									<h2>Your response has been submitted.</h2>
+								</div>";
+							} else {
+								echo "<div class='display-tc animate-box' data-animate-effect='fadeIn'>
+									<h1>Get In Touch</h1>
+									<h2>We'll answer you as quickly as we can!</h2>
+								</div>";
+							}
+						?>
+						
 					</div>
 				</div>
 			</div>
+			<?php
+				if (!empty($_GET["error"])) {
+					echo "<div class='alert alert-danger'>
+						  <strong>Error!</strong> Oh no! An error occured. Message: " . $_GET["error"] . "
+						</div>";
+				}
+			?>
 		</div>
 	</header>
 
