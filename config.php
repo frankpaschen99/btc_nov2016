@@ -18,7 +18,7 @@
 	$db = new PDO("mysql:dbname=$DB_NAME;host=$DB_HOST", $DB_USER, $DB_PASS);
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	// Configure the Coinbase api and create a Client object
-	$configuration = Configuration::apiKey('vh3GZE5QALqHONWf', 'Kcu3F2LWx6PcfKmluVNhYJvd2UHq9csY');
+	$configuration = Configuration::apiKey('ESdH3lBFyXd1CpXn', 'Y2yLL4tLIuR9gjix79gkTnwaMO577peD');
 	$client = Client::create($configuration);
 	
 	// Authy for admin panel
