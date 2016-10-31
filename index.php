@@ -127,11 +127,19 @@ require_once("functions.php");
 			<div class="row animate-box">
 				<div class="col-md-12" style="text-align:center">
 					<?php
+						// General errors
 						if (isset($_GET["error"])) {
 							echo "<div class='alert alert-danger'>
 								  <strong>Error!</strong> Oh no! An error occured. Message: " . $_GET["error"] . "
 								</div>";
 						}
+						// Plan creation success
+						if (isset($_GET["message"]) && $_GET["message"] == "success") {
+							echo "<div class='alert alert-success'>
+								  <strong>Success!</strong> Your plan was created successfully. Deposit into the wallet shown below to begin receiving returns.<br/>Be sure to save your UUID for support tickets and viewing statistics.
+								</div>";
+						}
+						// shown when plan creation succeeded
 						if (isset($_GET["depadd"]) && preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $_GET["depadd"])) {
 							echo("<div class='col-md-8 col-md-offset-2 text-center gtco-heading'><img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . $_GET["depadd"] . "/></div>");
 							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>

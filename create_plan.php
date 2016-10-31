@@ -49,7 +49,7 @@ if(isset($_POST["submit"])) {
 		$stmt->execute(array($uuid, $wd_add, $deposit_address, $plan));
 		
 		// Send user back to invest.php with their new deposit address
-		header("Location: index.php?depadd=" . $deposit_address . "&uuid=" . $uuid);
+		header("Location: index.php?depadd=" . $deposit_address . "&uuid=" . $uuid . "&message=success" . "#gtco-started");
 	}
 } else {
 	header("Location: index.php?error=no_info_received#gtco-started");
