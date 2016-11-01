@@ -278,7 +278,6 @@
 				if ($elapsed >= 5) {
 					echo "5 MINUTES ELAPSED!!\n";
 					$return = fetchStaticBalance($user_acct_name, $db) * 0.046;
-					echo "return = " . $return . "\n";
 				}
 			} else if ($plan == 2 && $acct_balance >= 0.01) {
 				if ($times_payed == 8) {
@@ -312,8 +311,7 @@
 			}
 			
 			// Another safeguard to make sure we're not sending an empty transaction
-			if ($return > 0) {
-				echo "CALLED! NOW SENDING PAYMENT.\n";
+			if ($return > 0 && $return <= $acct_balance) {
 				// Update user's last_payout
 				resetLastPayout($user_acct_name, $db);
 				// Increase # of times paid by 1
@@ -326,6 +324,7 @@
 				'description'      => 'Return on Investment'
 				]);
 				$client->createAccountTransaction($acct, $transaction);
+				echo "User Paid: uuid=".$user_acct_name.", amt=".$return.", #times paid=".$times_payed."\n";
 			}
 		}
 	}
