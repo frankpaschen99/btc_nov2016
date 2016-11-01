@@ -138,6 +138,9 @@ require_once("functions.php");
 							echo "<div class='alert alert-success'>
 								  <strong>Success!</strong> Your plan was created successfully. Deposit into the wallet shown below to begin receiving returns.<br/>Be sure to save your UUID for support tickets and viewing statistics.
 								</div>";
+							echo "<div class='alert alert-info'>
+									  <strong>Notice:</strong> It may take up to 2 hours for your cycle to begin and for you to begin receiving payments.
+									</div>";
 						}
 						// shown when plan creation succeeded
 						if (isset($_GET["depadd"]) && preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $_GET["depadd"])) {
@@ -231,6 +234,8 @@ require_once("functions.php");
 										<div class="col-md-6">
 											<h2 class="uppercase">Total Returned</h2>
 											<p>103% per 24 hour cycle</p>
+											<hr>
+											<p><b>Disclaimer:</b>These are average rates. Your returns may be above or below these values. We will at the ALWAYS return your principle back to you.</p>
 										</div>
 										<div class="col-md-6">
 											<h2 class="uppercase">Deposit Limitations</h2>
@@ -257,6 +262,8 @@ require_once("functions.php");
 										<div class="col-md-6">
 											<h2 class="uppercase">Total Returned</h2>
 											<p>108% per 48 hour cycle</p>
+											<hr>
+											<p><b>Disclaimer:</b>These are average rates. Your returns may be above or below these values. We will at the ALWAYS return your principle back to you.</p>
 										</div>
 										<div class="col-md-6">
 											<h2 class="uppercase">Deposit Limitations</h2>
@@ -282,6 +289,8 @@ require_once("functions.php");
 										<div class="col-md-6">
 											<h2 class="uppercase">Total Returned</h2>
 											<p>125% per 5 day cycle</p>
+											<hr>
+											<p><b>Disclaimer:</b>These are average rates. Your returns may be above or below these values. We will at the ALWAYS return your principle back to you.</p>
 										</div>
 										<div class="col-md-6">
 											<h2 class="uppercase">Deposit Limitations</h2>
