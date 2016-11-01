@@ -1,10 +1,9 @@
 <?php
 require_once("functions.php");
 require_once("config.php");
-
-$logged_in = true;
-/*$verification;
-
+	
+$verification;
+$logged_in = false;
 if (isset($_POST["submit"])) {
 	$token = $_POST["token"];
 	$name = $_POST["name"];
@@ -19,31 +18,32 @@ if (isset($_POST["submit"])) {
 }
 
 if (isset($_POST["submit"]) && $verification->ok()) {
-	$logged_in = true;*/
-echo "<h2>Frank's Super Neat and Functional Admin Panel</h2>";
-// Support tickets
-$stmt = $db->query("SELECT * FROM tickets");
+	$logged_in = true;
+	echo "<h2>Frank's Super Neat and Functional Admin Panel</h2>";
+	// Support tickets
+	$stmt = $db->query("SELECT * FROM tickets");
 
-echo "<table border=1 style=width:100% height:100%>
-	 <tr>
-	 <td><b>User</b></td>
-	 <td><b>Email</b></td>
-	 <td><b>Message</b></td>
-	 <td><b>Date</b></td>
-	 </tr><br /><tr/>";
+	echo "<table border=1 style=width:100% height:100%>
+		 <tr>
+		 <td><b>User</b></td>
+		 <td><b>Email</b></td>
+		 <td><b>Message</b></td>
+		 <td><b>Date</b></td>
+		 </tr><br /><tr/>";
 
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
-{
-	$user = $row['uuid'];
-	$message = $row['content'];
-	$email = $row['email'];
-	$date = $row['submitted'];
-	
-	echo '<td>' . $user . '</td>';
-	echo '<td>' . $email . '</td>';
-	echo '<td>' . $message . '</td>';
-	echo '<td>' . $date . '</td>';
-	echo '</tr><br />';	
+	while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
+	{
+		$user = $row['uuid'];
+		$message = $row['content'];
+		$email = $row['email'];
+		$date = $row['submitted'];
+		
+		echo '<td>' . $user . '</td>';
+		echo '<td>' . $email . '</td>';
+		echo '<td>' . $message . '</td>';
+		echo '<td>' . $date . '</td>';
+		echo '</tr><br />';	
+	}
 }
 ?>
 
