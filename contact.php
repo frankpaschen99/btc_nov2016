@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>ShittyName &mdash; Bitcoin Investing</title>
+<title>BTCSurge &mdash; Bitcoin Investing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Animate.css -->
@@ -42,7 +42,7 @@
 			<div class="gtco-container">
 				<div class="row">
 					<div class="col-xs-2">
-						<div id="gtco-logo"><a href="index.html">ShittyName</a></div>
+						<div id="gtco-logo"><a href="index.html">BTCSurge</a></div>
 					</div>
 					<div class="col-xs-8 text-center menu-1">
 						<ul>
@@ -145,7 +145,7 @@
 			<div class="row copyright">
 				<div class="col-md-12">
 					<p class="pull-left">
-						<small class="block">&copy; 2016 ShittyName. All Rights Reserved.</small>
+						<small class="block">&copy; 2016 BTCSurge. All Rights Reserved.</small>
 					</p>
 				</div>
 			</div>

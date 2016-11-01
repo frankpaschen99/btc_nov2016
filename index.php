@@ -7,7 +7,7 @@ require_once("functions.php");
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ShittyName &mdash; Bitcoin Investing</title>
+	<title>BTCSurge &mdash; Bitcoin Investing</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Animate.css -->
@@ -48,7 +48,7 @@ require_once("functions.php");
 		<div class="gtco-container">
 			<div class="row">
 				<div class="col-xs-2">
-					<div id="gtco-logo"><a href="index.html">ShittyName</a></div>
+					<div id="gtco-logo"><a href="index.html">BTCSurge</a></div>
 				</div>
 				<div class="col-xs-8 text-center menu-1">
 					<ul>
@@ -73,7 +73,7 @@ require_once("functions.php");
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>ShittyName</h1>
+							<h1>BTCSurge</h1>
 							<h2>The Smarter, Safer Way To Grow your Crypto</a></h2>
 							<p><a href="#gtco-started" class="btn btn-default">Get Started</a></p>
 						</div>
@@ -101,7 +101,7 @@ require_once("functions.php");
 							<i class="fa fa-line-chart"></i>
 						</span>
 						<h3>No Fees, Big Growth</h3>
-						<p>ShittyName will never take fees from your earnings. All the crypto generated goes straight to you!</p>
+						<p>BTCSurge will never take fees from your earnings. All the crypto generated goes straight to you!</p>
 					</div>
 				</div>
 				<div class="col-md-4 col-sm-4">
@@ -408,7 +408,7 @@ require_once("functions.php");
 			<div class="row copyright">
 				<div class="col-md-12">
 					<p class="pull-left">
-						<small class="block">&copy; 2016 ShittyName. All Rights Reserved.</small>
+						<small class="block">&copy; 2016 BTCSurge. All Rights Reserved.</small>
 					</p>
 				</div>
 			</div>
