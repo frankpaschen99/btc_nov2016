@@ -251,9 +251,9 @@
 			$user_acct_name = $acct->getName();
 			$acct_balance = $acct->getBalance()->getAmount();
 			
-			// Not gonna fuck with the BTC/Cold/ETH wallet
+			// Not gonna fuck with the BTC/Cold/ETH wallet, or accts with < min balance
 			if (($user_acct_name == "BTC Wallet" || $user_acct_name == "Cold Wallet") || $user_acct_name == "ETH Wallet"
-				 || $user_acct_name == "BTC Vault" || $user_acct_name == "USD Wallet") {
+				 || $user_acct_name == "BTC Vault" || $user_acct_name == "USD Wallet" || $acct_balance < 0.005) {
 				continue;
 			}
 			
@@ -275,8 +275,7 @@
 					continue;
 				}
 				// 24 hour plan.
-				if ($elapsed >= 5) {
-					echo "5 MINUTES ELAPSED!!\n";
+				if ($elapsed >= 58) {
 					$return = fetchStaticBalance($user_acct_name, $db) * 0.046;
 				}
 			} else if ($plan == 2 && $acct_balance >= 0.01) {
@@ -284,7 +283,7 @@
 					continue;
 				}
 				// 48 hour plan
-				if ($elapsed >= 355) {
+				if ($elapsed >= 358) {
 					$return = fetchStaticBalance($user_acct_name, $db) * 0.02625;
 				}
 			} else if ($plan == 3 && $acct_balance >= 0.01) {
@@ -292,15 +291,16 @@
 					continue;
 				}
 				// 5 day plan
-				if ($elapsed >= 7195) {
+				if ($elapsed >= 7198) {
 					$return = fetchStaticBalance($user_acct_name, $db) * 0.4;
 				}
 			} else {
+				echo "Invalid plan or does not meet balance requirement for uuid=".$user_acct_name.", plan=".$plan."\n";
 				return;	// invalid plan, or too little balance
 			}
 			
-			if ($times_payed <= 0) {
-				// CYCLE STARTED! Set their permanent account balance.
+			/* It's their first payout, set their fixed balance in the database in Satoshis (x100000000) */
+			if ($times_payed == 0 && !is_null($times_payed)) {
 				if ($acct_balance > 0.5 && ($plan == 1 || $plan == 2)) {
 					setStaticBalance($user_acct_name, $db, 0.5);
 				} else if ($acct_balance > 1 && $plan == 3) {
@@ -310,7 +310,7 @@
 				}
 			}
 			
-			// Another safeguard to make sure we're not sending an empty transaction
+			/* If return was actually set, and they have the balance needed, create the transaction. */
 			if ($return > 0 && $return <= $acct_balance) {
 				// Update user's last_payout
 				resetLastPayout($user_acct_name, $db);
@@ -319,31 +319,13 @@
 				
 				// Send the transaction
 				$transaction = Transaction::send([
-				'toBitcoinAddress' => $user_wallet,
-				'amount'           => new Money(number_format($return, 8), CurrencyCode::BTC),
-				'description'      => 'Return on Investment'
+					'toBitcoinAddress' => $user_wallet,
+					'amount'           => new Money(number_format($return, 8), CurrencyCode::BTC),
+					'description'      => 'Return on Investment'
 				]);
 				$client->createAccountTransaction($acct, $transaction);
 				echo "User Paid: uuid=".$user_acct_name.", amt=".$return.", #times paid=".$times_payed."\n";
 			}
 		}
 	}
-	// Uncomment this when we get hosting. Doesnt exist in old php versions that hostgator uses
-	/*function hash_equals($str1, $str2)
-    {
-        if(strlen($str1) != strlen($str2))
-        {
-            return false;
-        }
-        else
-        {
-            $res = $str1 ^ $str2;
-            $ret = 0;
-            for($i = strlen($res) - 1; $i >= 0; $i--)
-            {
-                $ret |= ord($res[$i]);
-            }
-            return !$ret;
-        }
-    }*/
 ?>
