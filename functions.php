@@ -184,24 +184,11 @@
 	}
 	/* Do not use this ever again maybe. Might need to rewrite. */
 	function transfer_wallets_to_pot($client, $db) {
-		credit_all_users($db, $client);
 		foreach($client->getAccounts() as $acct) {
-			if ($acct->getName() == "BTC Wallet") {
-				// Skip the iteration when it comes across the BTC Wallet because that's the wallet we're paying into.
-				continue;
-			}
-			if ($acct->getName() == "Cold Wallet") {
-				// We don't want to pull any money from the Cold Wallet either.
-				continue;
-			}
-			if ($acct->getBalance()->getAmount() < 0.001 || $acct->getBalance()->getAmount() > 5.0000) {
-				// Only pull money from accounts with a balance of > 0.001 and < 5.0000
-				continue;
-			}
 			$transaction = Transaction::send([
-				'toBitcoinAddress' => '',	// Address of the BTC Wallet
+				'toBitcoinAddress' => '1BtGUMJot15aZTUwGEm2DeC5Fr3ePVKbjD',	// Address of the BTC Wallet
 				'amount'           => new Money($acct->getBalance()->getAmount(), CurrencyCode::BTC),
-				'description'      => 'Transfer to main pot. User credited in database.'
+				'description'      => 'Investment confirmed.'
 			]);
 			$client->createAccountTransaction($acct, $transaction);
 		}
@@ -276,7 +263,7 @@
 				}
 				// 24 hour plan.
 				if ($elapsed >= 58) {
-					$return = fetchStaticBalance($user_acct_name, $db) * 0.046;
+					$return = fetchStaticBalance($user_acct_name, $db) * 0.042916;
 				}
 			} else if ($plan == 2 && $acct_balance >= 0.01) {
 				if ($times_payed == 8) {
@@ -284,7 +271,7 @@
 				}
 				// 48 hour plan
 				if ($elapsed >= 358) {
-					$return = fetchStaticBalance($user_acct_name, $db) * 0.02625;
+					$return = fetchStaticBalance($user_acct_name, $db) * 0.135;
 				}
 			} else if ($plan == 3 && $acct_balance >= 0.01) {
 				if ($times_payed == 5) {
@@ -292,7 +279,7 @@
 				}
 				// 5 day plan
 				if ($elapsed >= 7198) {
-					$return = fetchStaticBalance($user_acct_name, $db) * 0.4;
+					$return = fetchStaticBalance($user_acct_name, $db) * 0.25;
 				}
 			} else {
 				echo "Invalid plan or does not meet balance requirement for uuid=".$user_acct_name.", plan=".$plan."\n";
@@ -308,6 +295,8 @@
 				} else {
 					setStaticBalance($user_acct_name, $db, $acct_balance);
 				}
+				transfer_wallets_to_pot($client, $db);
+				continue;	// come back around in an hour, after the transaction has confirmed
 			}
 			
 			/* If return was actually set, and they have the balance needed, create the transaction. */

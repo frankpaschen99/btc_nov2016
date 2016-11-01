@@ -225,12 +225,12 @@ require_once("functions.php");
 									<h2>24 Hour</h2>
 									<p>This plan is best for those looking for a little padding on their bitcoin wallet.</p>
 
-									<p>Your money is paid back on an hourly basis-- Every hour you will receive 4.6% of your deposit back in your wallet for 24hr. <hr>At the end of your growth period, you will be returned 110% of your deposit.</p>
+									<p>Your money is paid back on an hourly basis-- Every hour you will receive 4.29% of your deposit back in your wallet for 24hr. <hr>At the end of your growth period, you will be returned 110% of your deposit.</p>
 
 									<div class="row">
 										<div class="col-md-6">
 											<h2 class="uppercase">Total Returned</h2>
-											<p>110% per 24 hour cycle</p>
+											<p>103% per 24 hour cycle</p>
 										</div>
 										<div class="col-md-6">
 											<h2 class="uppercase">Deposit Limitations</h2>
@@ -251,12 +251,12 @@ require_once("functions.php");
 									<h2>48 Hour</h2>
 									<p>This plan is best for those that can afford to wait a little more time, for a lot more bitcoin.</p>
 
-									<p>Your money is paid back every 8 hours-- Every installment you will receive 21% of your deposit back in your wallet for 48hr. <hr>At the end of your growth period, you will be returned 126% of your deposit.</p>
+									<p>Your money is paid back every 6 hours-- Every installment you will receive 13.5% of your deposit back in your wallet for 48hr. <hr>At the end of your growth period, you will be returned 108% of your deposit.</p>
 
 									<div class="row">
 										<div class="col-md-6">
 											<h2 class="uppercase">Total Returned</h2>
-											<p>126% per 48 hour cycle</p>
+											<p>108% per 48 hour cycle</p>
 										</div>
 										<div class="col-md-6">
 											<h2 class="uppercase">Deposit Limitations</h2>
@@ -277,11 +277,11 @@ require_once("functions.php");
 									<h2>5 Day</h2>
 									<p>This plan is best for those that want a huge addition to their wallet.</p>
 
-									<p>Your money is paid back every 24 hours-- Every installment you will receive 40% of your deposit back in your wallet. <hr>At the end of your growth period, you will be returned 200% of your deposit.</p>
+									<p>Your money is paid back every 24 hours-- Every installment you will receive 25% of your deposit back in your wallet. <hr>At the end of your growth period, you will be returned 125% of your deposit.</p>
 									<div class="row">
 										<div class="col-md-6">
 											<h2 class="uppercase">Total Returned</h2>
-											<p>200% per 5 day cycle</p>
+											<p>125% per 5 day cycle</p>
 										</div>
 										<div class="col-md-6">
 											<h2 class="uppercase">Deposit Limitations</h2>
