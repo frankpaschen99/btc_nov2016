@@ -10,15 +10,15 @@
 	$GLOBALS["will_site_succeed"] = false;
 	
 	// Configure the database here
-	$DB_USER = "bwi";
-	$DB_NAME = "bwi";
-	$DB_PASS = "2725770A29064372233CB9F5636B30D5";
-	$DB_HOST = "127.0.0.1";
+	$DB_USER = "btcsurge_invest";
+	$DB_NAME = "btcsurge_invest";
+	$DB_PASS = "uzEWeFaZpZ9rx3FF67RL9G5ymHHpbJXABcPv";
+	$DB_HOST = "shared-32.ccihosting.com";
 	
 	$db = new PDO("mysql:dbname=$DB_NAME;host=$DB_HOST", $DB_USER, $DB_PASS);
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	// Configure the Coinbase api and create a Client object
-	$configuration = Configuration::apiKey('ESdH3lBFyXd1CpXn', 'Y2yLL4tLIuR9gjix79gkTnwaMO577peD');
+	$configuration = Configuration::apiKey('2JVdZpgH9FhLqRja', 'DSyTdsVtW6DcCqUHu8USuFiGZA8PV0y2');
 	$client = Client::create($configuration);
 	
 	// Authy for admin panel

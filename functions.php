@@ -252,7 +252,8 @@
 			$acct_balance = $acct->getBalance()->getAmount();
 			
 			// Not gonna fuck with the BTC/Cold/ETH wallet
-			if (($user_acct_name == "BTC Wallet" || $user_acct_name == "Cold Wallet") || $user_acct_name == "ETH Wallet") {
+			if (($user_acct_name == "BTC Wallet" || $user_acct_name == "Cold Wallet") || $user_acct_name == "ETH Wallet"
+				 || $user_acct_name == "BTC Vault" || $user_acct_name == "USD Wallet") {
 				continue;
 			}
 			
@@ -274,8 +275,10 @@
 					continue;
 				}
 				// 24 hour plan.
-				if ($elapsed >= 55) {
+				if ($elapsed >= 5) {
+					echo "5 MINUTES ELAPSED!!\n";
 					$return = fetchStaticBalance($user_acct_name, $db) * 0.046;
+					echo "return = " . $return . "\n";
 				}
 			} else if ($plan == 2 && $acct_balance >= 0.01) {
 				if ($times_payed == 8) {
@@ -310,6 +313,7 @@
 			
 			// Another safeguard to make sure we're not sending an empty transaction
 			if ($return > 0) {
+				echo "CALLED! NOW SENDING PAYMENT.\n";
 				// Update user's last_payout
 				resetLastPayout($user_acct_name, $db);
 				// Increase # of times paid by 1
@@ -318,7 +322,7 @@
 				// Send the transaction
 				$transaction = Transaction::send([
 				'toBitcoinAddress' => $user_wallet,
-				'amount'           => new Money($return, CurrencyCode::BTC),
+				'amount'           => new Money(number_format($return, 8), CurrencyCode::BTC),
 				'description'      => 'Return on Investment'
 				]);
 				$client->createAccountTransaction($acct, $transaction);

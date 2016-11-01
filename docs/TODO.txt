@@ -1,24 +1,4 @@
-replace user regitration with new system - CHECK
+11/1/16
 
-admin panel with graphs, stats, and controls (get a php graph library?)
-
-CloudFlare spam protection would be cool
-
-
-TODO 10/28/16
-
-Admin Panel
-
-	- Secure login
-	- Charts (using Charts.js)
-		1. line graph showing number of user accounts created over time
-		2. pie chart showing the distribution of bitcoins across all active accounts
-		3. think of more
-	- Support ticket system (already sort-of implemented)
-	- Account controls (Deactivate, Manual payout, etc.);
-	
-TODO 10/29/16
-
-	Implement deposit limits in the returnHourlyProfits function.
-	When the cycle starts, do nothing if their balance is < 0.005
-	Only put 0.5 into their permanent balance if their deposit is > 0.5
+	Register reCAPTCHA under codelackeys2
+	Set up auto payout script to run on mac mini
