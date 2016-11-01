@@ -2,3 +2,5 @@
 
 	Register reCAPTCHA under codelackeys2
 	Set up auto payout script to run on mac mini
+	Optimize hourly payout function
+		Handle cases where there isn't enough money in the user's wallet to payout for that hour/day
