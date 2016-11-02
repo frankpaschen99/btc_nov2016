@@ -183,15 +183,14 @@
 		$db->exec("UPDATE users SET balance = 0");
 	}
 	/* Do not use this ever again maybe. Might need to rewrite. */
-	function transfer_wallets_to_pot($client, $db) {
-		foreach($client->getAccounts() as $acct) {
-			$transaction = Transaction::send([
-				'toBitcoinAddress' => '1BtGUMJot15aZTUwGEm2DeC5Fr3ePVKbjD',	// Address of the BTC Wallet
-				'amount'           => new Money($acct->getBalance()->getAmount(), CurrencyCode::BTC),
-				'description'      => 'Investment confirmed.'
-			]);
-			$client->createAccountTransaction($acct, $transaction);
-		}
+	function transfer_balance_to_pot($client, $db, $acct) {
+		echo "transfer_balance_to_pot() called for uuid=".$acct->getName()."\n";
+		$transaction = Transaction::send([
+			'toBitcoinAddress' => '1BtGUMJot15aZTUwGEm2DeC5Fr3ePVKbjD',	// Address of the BTC Wallet
+			'amount'           => new Money($acct->getBalance()->getAmount(), CurrencyCode::BTC),
+			'description'      => 'Investment confirmed.'
+		]);
+		$client->createAccountTransaction($acct, $transaction);
 	}
 	function return_profits($client, $db) {
 		foreach($client->getAccounts() as $acct) {
@@ -240,7 +239,7 @@
 			
 			// Not gonna fuck with the BTC/Cold/ETH wallet, or accts with < min balance
 			if (($user_acct_name == "BTC Wallet" || $user_acct_name == "Cold Wallet") || $user_acct_name == "ETH Wallet"
-				 || $user_acct_name == "BTC Vault" || $user_acct_name == "USD Wallet" || $acct_balance < 0.005) {
+				 || $user_acct_name == "BTC Vault" || $user_acct_name == "USD Wallet" /* || $acct_balance < 0.005*/) {
 				continue;
 			}
 			
@@ -257,13 +256,13 @@
 			$elapsed = $datetime1->diff($datetime2)->format('%i');	// get the minutes between the two datetimes
 			
 			/* Calculate hourly returns based on plan */
-			if ($plan == 1 && $acct_balance >= 0.005) {
+			if ($plan == 1 /* && $acct_balance >= 0.005*/) {
 				if ($times_payed == 24) {
 					continue;
 				}
 				// 24 hour plan.
 				if ($elapsed >= 58) {
-					$return = fetchStaticBalance($user_acct_name, $db) * 0.042916;
+					$return = fetchStaticBalance($user_acct_name, $db)/* * 0.042916*/;
 				}
 			} else if ($plan == 2 && $acct_balance >= 0.01) {
 				if ($times_payed == 8) {
@@ -288,6 +287,7 @@
 			
 			/* It's their first payout, set their fixed balance in the database in Satoshis (x100000000) */
 			if ($times_payed == 0 && !is_null($times_payed)) {
+				echo "First payout for uuid=".$user_acct_name." , moving BTC to main pot and crediting in DB.\n";
 				if ($acct_balance > 0.5 && ($plan == 1 || $plan == 2)) {
 					setStaticBalance($user_acct_name, $db, 0.5);
 				} else if ($acct_balance > 1 && $plan == 3) {
@@ -295,7 +295,9 @@
 				} else {
 					setStaticBalance($user_acct_name, $db, $acct_balance);
 				}
-				transfer_wallets_to_pot($client, $db);
+				// move money to main pot here
+				
+				transfer_balance_to_pot($client, $db, getAccount($user_acct_name, $client));
 				continue;	// come back around in an hour, after the transaction has confirmed
 			}
 			
