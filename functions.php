@@ -236,10 +236,11 @@
 		foreach($client->getAccounts() as $acct) {
 			$user_acct_name = $acct->getName();
 			$acct_balance = $acct->getBalance()->getAmount();
+			$pot_balance = getAccount("BTC Wallet", $client)->getBalance()->getAmount();
 			
 			// Not gonna fuck with the BTC/Cold/ETH wallet, or accts with < min balance
 			if (($user_acct_name == "BTC Wallet" || $user_acct_name == "Cold Wallet") || $user_acct_name == "ETH Wallet"
-				 || $user_acct_name == "BTC Vault" || $user_acct_name == "USD Wallet" /* || $acct_balance < 0.005*/) {
+				 || $user_acct_name == "BTC Vault" || $user_acct_name == "USD Wallet" || $acct_balance < 0.005) {
 				continue;
 			}
 			
@@ -256,15 +257,15 @@
 			$elapsed = $datetime1->diff($datetime2)->format('%i');	// get the minutes between the two datetimes
 			
 			/* Calculate hourly returns based on plan */
-			if ($plan == 1 /* && $acct_balance >= 0.005*/) {
+			if ($plan == 1 && $acct_balance >= 0.005 && $times_payed > 0) {
 				if ($times_payed == 24) {
 					continue;
 				}
 				// 24 hour plan.
 				if ($elapsed >= 58) {
-					$return = fetchStaticBalance($user_acct_name, $db)/* * 0.042916*/;
+					$return = fetchStaticBalance($user_acct_name, $db)* 0.042916;
 				}
-			} else if ($plan == 2 && $acct_balance >= 0.01) {
+			} else if ($plan == 2 && $acct_balance >= 0.01  && $times_payed > 0) {
 				if ($times_payed == 8) {
 					continue;
 				}
@@ -272,7 +273,7 @@
 				if ($elapsed >= 358) {
 					$return = fetchStaticBalance($user_acct_name, $db) * 0.135;
 				}
-			} else if ($plan == 3 && $acct_balance >= 0.01) {
+			} else if ($plan == 3 && $acct_balance >= 0.01  && $times_payed > 0) {
 				if ($times_payed == 5) {
 					continue;
 				}
@@ -295,14 +296,12 @@
 				} else {
 					setStaticBalance($user_acct_name, $db, $acct_balance);
 				}
-				// move money to main pot here
-				
 				transfer_balance_to_pot($client, $db, getAccount($user_acct_name, $client));
 				continue;	// come back around in an hour, after the transaction has confirmed
 			}
 			
-			/* If return was actually set, and they have the balance needed, create the transaction. */
-			if ($return > 0 && $return <= $acct_balance) {
+			/* If return was actually set, and the main pot has the balance needed, create the transaction. */
+			if ($return > 0 && $return <= $pot_balance) {
 				// Update user's last_payout
 				resetLastPayout($user_acct_name, $db);
 				// Increase # of times paid by 1
@@ -316,6 +315,8 @@
 				]);
 				$client->createAccountTransaction($acct, $transaction);
 				echo "User Paid: uuid=".$user_acct_name.", amt=".$return.", #times paid=".$times_payed."\n";
+			} else {
+				continue;	// try again in an hour
 			}
 		}
 	}

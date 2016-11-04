@@ -10,8 +10,8 @@ use Coinbase\Wallet\Client;
 use Coinbase\Wallet\Configuration;
 use Coinbase\Wallet\Resource\Address;
 
-$public_key = '6LffbhQTAAAAABC-WF-gGLNxK6dJR0jkOE_RsICk';
-$private_key = '6LffbhQTAAAAAH_0_ieczUXzlx6fbFaDjkFKMBjx';
+$public_key = '6LdV3woUAAAAAHPX-EBDWqTS4GXX_XEOG_RhWP2H';
+$private_key = '6LdV3woUAAAAAIED4EgUQUOl6vk2H-8SfCCV03YW';
 
 $recaptcha = new \ReCaptcha\ReCaptcha($private_key);
 $resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
@@ -50,6 +50,9 @@ if(isset($_POST["submit"])) {
 		
 		// Send user back to invest.php with their new deposit address
 		header("Location: index.php?depadd=" . $deposit_address . "&uuid=" . $uuid . "&message=success" . "#gtco-started");
+	} else {
+		// Send user back to invest.php with their new deposit address
+		header("Location: index.php?depadd=" . $deposit_address . "&uuid=" . $uuid . "&error=invalid_wallet_address" . "#gtco-started");
 	}
 } else {
 	header("Location: index.php?error=no_info_received#gtco-started");

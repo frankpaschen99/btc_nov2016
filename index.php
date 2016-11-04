@@ -37,7 +37,11 @@ require_once("functions.php");
 	<![endif]-->
 	
 	<script src='https://www.google.com/recaptcha/api.js'></script>
-	
+	<script type="text/javascript"> //<![CDATA[ 
+	var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "https://www.trustlogo.com/");
+	document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+	//]]>
+	</script>
 	</head>
 	<body>
 
@@ -53,7 +57,7 @@ require_once("functions.php");
 				<div class="col-xs-8 text-center menu-1">
 					<ul>
 						<li class="active"><a href="index.php">Home</a></li>
-						<li><a href="#">BitcoinTalk</a></li>
+						<li><a href="https://bitcointalk.org/index.php?topic=1670176">BitcoinTalk</a></li>
 						<li><a href="contact.php">Contact</a></li>
 					</ul>
 				</div>
@@ -116,87 +120,7 @@ require_once("functions.php");
 			</div>
 		</div>
 	</div>
-
-	<div id="gtco-started">
-		<div class="gtco-container">
-			<div class="row animate-box">
-				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
-					<h2>Get Started</h2>
-				</div>
-			</div>
-			<div class="row animate-box">
-				<div class="col-md-12" style="text-align:center">
-					<?php
-						// General errors
-						if (isset($_GET["error"])) {
-							echo "<div class='alert alert-danger'>
-								  <strong>Error!</strong> Oh no! An error occured. Message: " . $_GET["error"] . "
-								</div>";
-						}
-						// Plan creation success
-						if (isset($_GET["message"]) && $_GET["message"] == "success") {
-							echo "<div class='alert alert-success'>
-								  <strong>Success!</strong> Your plan was created successfully. Deposit into the wallet shown below to begin receiving returns.<br/>Be sure to save your UUID for support tickets and viewing statistics.
-								</div>";
-							echo "<div class='alert alert-info'>
-									  <strong>Notice:</strong> It may take up to 2 hours for your cycle to begin and for you to begin receiving payments.
-									</div>";
-						}
-						// shown when plan creation succeeded
-						if (isset($_GET["depadd"]) && preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $_GET["depadd"])) {
-							echo("<div class='col-md-8 col-md-offset-2 text-center gtco-heading'><img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . $_GET["depadd"] . "/></div>");
-							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
-							<h4 style='color:white'>Deposit Address:<br/>" . $_GET["depadd"] . "</h4>
-							</div>";
-							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
-							<h4 style='color:white'>Your UUID (Save This):<br />" . $_GET["uuid"]. "</h4></div>";
-						} else if (!hasUniqueIDSet()) { // shown when submit is not pressed, and when they havent input a UUID
-							echo "<form class='form-inline' action='create_plan.php' method='POST'>
-									<div class='form-group'>
-										  <select class='form-control' style='width:40%' name='plan_dropdown'>
-											<option value='-1' style='color:black'>Select Plan</option>
-											<option value='1' style='color:black'>24 hours</option>
-											<option value='2' style='color:black'>48 hours</option>
-											<option value='3' style='color:black'>5 day</option>
-										  </select>
-									</div>
-									<div class='form-group'>
-										<label for='text' class='sr-only'>Wallet Address to Withdraw to</label>
-										<input type='text' style='width:40%' class='form-control' name='withdraw_address' placeholder='Wallet Address To Withdraw To'>
-									</div>
-									<center><div class='g-recaptcha' data-sitekey='6LffbhQTAAAAABC-WF-gGLNxK6dJR0jkOE_RsICk'></div></center>
-									<br />
-									<center><input type='submit' style='width:25%' name='submit' class='btn btn-default btn-block'></center>
-								</form><br/><hr><br />";
-							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'> 
-									<h4 style='color:white;'>Alternatively, input your UUID to view your statistics and deposit information:</h4>
-									</div>
-									<form action='input_uuid.php' method='GET'>
-										<center>
-										<input type='text' style='width:30%' class='form-control' name='uuid' placeholder='Your UUID'><br/>
-										<input type='submit' style='width:25%' class='btn btn-default btn-block' name='submit'>
-										</center>
-									</form></center>";
-						} else {	// shown when the user inputs a UUID to view stats/addresses
-							$uuid = getSessionUUID();
-							echo("<div class='col-md-8 col-md-offset-2 text-center gtco-heading'><img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . fetchDepositAddress(getSessionUUID(), $db) . "/></div>");
-							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
-							<h4 style='color:white'>Deposit Address:<br/>" . fetchDepositAddress($uuid, $db) . "</h4>
-							</div>";
-							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
-							<h4 style='color:white'>Your UUID (Save This):<br />" . $uuid . "</h4></div>";
-							
-							// TODO: Transaction history/stats here
-						}
-					?>
-					<br/><br />
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-		<div id="gtco-services">
+<div id="gtco-services">
 			<div class="gtco-container">
 
 				<div class="row animate-box">
@@ -307,6 +231,86 @@ require_once("functions.php");
 				</div>
 			</div>
 		</div>
+	<div id="gtco-started">
+		<div class="gtco-container">
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+					<h2>Get Started</h2>
+				</div>
+			</div>
+			<div class="row animate-box">
+				<div class="col-md-12" style="text-align:center">
+					<?php
+						// General errors
+						if (isset($_GET["error"])) {
+							echo "<div class='alert alert-danger'>
+								  <strong>Error!</strong> Oh no! An error occured. Message: " . $_GET["error"] . "
+								</div>";
+						}
+						// Plan creation success
+						if (isset($_GET["message"]) && $_GET["message"] == "success") {
+							echo "<div class='alert alert-success'>
+								  <strong>Success!</strong> Your plan was created successfully. Deposit into the wallet shown below to begin receiving returns.<br/>Be sure to save your UUID for support tickets and viewing statistics.
+								</div>";
+							echo "<div class='alert alert-info'>
+									  <strong>Notice:</strong> It may take up to 2 hours for your cycle to begin and for you to begin receiving payments.
+									</div>";
+						}
+						// shown when plan creation succeeded
+						if (isset($_GET["depadd"]) && preg_match("^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$^", $_GET["depadd"])) {
+							echo("<div class='col-md-8 col-md-offset-2 text-center gtco-heading'><img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . $_GET["depadd"] . "/></div>");
+							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
+							<h4 style='color:white'>Deposit Address:<br/>" . $_GET["depadd"] . "</h4>
+							</div>";
+							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
+							<h4 style='color:white'>Your UUID (Save This):<br />" . $_GET["uuid"]. "</h4></div>";
+						} else if (!hasUniqueIDSet()) { // shown when submit is not pressed, and when they havent input a UUID
+							echo "<form class='form-inline' action='create_plan.php' method='POST'>
+									<div class='form-group'>
+										  <select class='form-control' style='width:40%' name='plan_dropdown'>
+											<option value='-1' style='color:black'>Select Plan - See Above for Plan Information</option>
+											<option value='1' style='color:black'>24 hours</option>
+											<option value='2' style='color:black'>48 hours</option>
+											<option value='3' style='color:black'>5 day</option>
+										  </select>
+									</div>
+									<div class='form-group'>
+										<label for='text' class='sr-only'>Wallet Address to Withdraw to</label>
+										<input type='text' style='width:40%' class='form-control' name='withdraw_address' placeholder='Wallet Address To Withdraw To'>
+									</div>
+									<center><div class='g-recaptcha' data-sitekey='6LdV3woUAAAAAHPX-EBDWqTS4GXX_XEOG_RhWP2H'></div></center>
+									<br />
+									<center><input type='submit' style='width:25%' name='submit' class='btn btn-default btn-block'></center>
+								</form><br/><hr><br />";
+							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'> 
+									<h4 style='color:white;'>Alternatively, input your UUID to view your statistics and deposit information:</h4>
+									</div>
+									<form action='input_uuid.php' method='GET'>
+										<center>
+										<input type='text' style='width:30%' class='form-control' name='uuid' placeholder='Your UUID'><br/>
+										<input type='submit' style='width:25%' class='btn btn-default btn-block' name='submit'>
+										</center>
+									</form></center>";
+						} else {	// shown when the user inputs a UUID to view stats/addresses
+							$uuid = getSessionUUID();
+							echo("<div class='col-md-8 col-md-offset-2 text-center gtco-heading'><img src=https://chart.googleapis.com/chart?cht=qr&chs=192x192&chl=" . fetchDepositAddress(getSessionUUID(), $db) . "/></div>");
+							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
+							<h4 style='color:white'>Deposit Address:<br/>" . fetchDepositAddress($uuid, $db) . "</h4>
+							</div>";
+							echo "<div class='col-md-8 col-md-offset-2 text-center gtco-heading'>
+							<h4 style='color:white'>Your UUID (Save This):<br />" . $uuid . "</h4></div>";
+							
+							// TODO: Transaction history/stats here
+						}
+					?>
+					<br/><br />
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+		
 
 	<!-- Uncomment this when we actually have legit data to post there -->
 	<!--<div id="gtco-counter" class="gtco-bg gtco-counter" style="background-image:url(images/img_bg_2.jpg);">
@@ -418,9 +422,13 @@ require_once("functions.php");
 				<div class="col-md-12">
 					<p class="pull-left">
 						<small class="block">&copy; 2016 BTCSurge. All Rights Reserved.</small>
+						<script language="JavaScript" type="text/javascript">
+						TrustLogo("https://btcsurge.com/images/comodo_secure_seal_76x26_transp.png", "CL1", "none");
+						</script>
 					</p>
 				</div>
 			</div>
+			
 		</div>
 	</footer>
 

@@ -47,7 +47,7 @@
 					<div class="col-xs-8 text-center menu-1">
 						<ul>
 							<li><a href="index.php">Home</a></li>
-							<li><a href="#">BitcoinTalk</a></li>
+							<li><a href="https://bitcointalk.org/index.php?topic=1670176">BitcoinTalk</a></li>
 							<li class="active"><a href="contact.php">Contact</a></li>
 						</ul>
 					</div>
@@ -146,6 +146,9 @@
 				<div class="col-md-12">
 					<p class="pull-left">
 						<small class="block">&copy; 2016 BTCSurge. All Rights Reserved.</small>
+						<script language="JavaScript" type="text/javascript">
+						TrustLogo("https://btcsurge.com/images/comodo_secure_seal_76x26_transp.png", "CL1", "none");
+						</script>
 					</p>
 				</div>
 			</div>
